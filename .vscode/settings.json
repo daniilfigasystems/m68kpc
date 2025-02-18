@@ -1,0 +1,10 @@
+{
+    "[m68k]": {
+        "editor.rulers": []
+    },
+    "files.associations": {
+        "stdlib.h": "c",
+        "string.h": "c",
+        "stdio.h": "c"
+    }
+}
