@@ -309,7 +309,8 @@ void ic_set(unsigned char irq)
 {
     unsigned char irq_pending_old = irq_reg.IRQPD;
 
-    irq_reg.IRQPD &= irq_reg.IRQMASK |= (1 << irq);
+    irq_reg.IRQPD |= (1 << irq);
+    irq_reg.IRQPD &= irq_reg.IRQMASK;
     
     if (irq_reg.IRQPD != irq_pending_old && irq > irq_reg.IRQHIGHEST)
     {
@@ -320,7 +321,8 @@ void ic_set(unsigned char irq)
 
 void ic_clear(unsigned char irq)
 {
-    irq_reg.IRQPD &= irq_reg.IRQMASK &= ~(1 << irq);
+    irq_reg.IRQPD &= ~(1 << irq);
+    irq_reg.IRQPD &= irq_reg.IRQMASK;
 
     for (irq_reg.IRQHIGHEST = 7; irq_reg.IRQHIGHEST > 0; irq_reg.IRQHIGHEST--)
         if (irq_reg.IRQPD & (1 << irq_reg.IRQHIGHEST))
@@ -353,7 +355,7 @@ void dma_write_8(unsigned int address, unsigned int value)
                 dma_reg.STATUS &= ~(1 << 7);
                 dma_reg.dmafuncs[dma_reg.DMASEL]((dma_reg.ADDRH << 16) | (dma_reg.ADDRL & 0xffff), dma_reg.SIZE, value & 0x01);
                 dma_reg.STATUS |= (1 << 7);
-                m68k_set_irq(isa_desc[4].irq);
+                ic_set(isa_desc[3].irq);
             }
             break;
         case 0x01:
@@ -681,7 +683,8 @@ int main(int argc, char *argv[])
 
     while (!stop)
     {
-        m68k_execute(7500);
+        usleep(75000);
+        m68k_execute(1);
         fflush(stdout);
         while (SDL_PollEvent(&event) == 1) {
             if (event.type == SDL_QUIT) {

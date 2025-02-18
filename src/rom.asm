@@ -79,7 +79,7 @@ EntryPoint:           ; Entry point address set in ROM header
 Main:
 	move.l #1024,a1
 	move.b #0,d1
-	move.w #1024,d2
+	move.w #$0eff,d2
 	bsr ReadDMA
 	lea.l string,a1
 	bsr Printstring
@@ -228,6 +228,37 @@ Writedisk: ; d1 data a1 disk address
 	move.b d1,(a0)
 	rts
 
+	Readdisk: ; d1 data a1 disk address
+	move.l #$f00000,a0
+	move.l #$0fffff,a2
+	moveq.l #2,d7
+	move.b d7,(a2)
+	addq.l #1,a0
+	move.l a1,d6
+	andi.l #$ff,d6
+	move.b d6,(a0)
+	addq.l #1,a0
+	move.l a1,d6
+	lsr.l #8,d6
+	andi.l #$ff,d6
+	move.b d6,(a0)
+	addq.l #1,a0
+	move.l a1,d6
+	lsr.l #8,d6
+	lsr.l #8,d6
+	andi.l #$ff,d6
+	move.b d6,(a0)
+	addq.l #1,a0
+	move.l a1,d6
+	lsr.l #8,d6
+	lsr.l #8,d6
+	lsr.l #8,d6
+	andi.l #$ff,d6
+	move.b d6,(a0)
+	subq.l #4,a0
+	move.b (a0),d1
+	rts
+
 IsreadyDMA:
 	move.l #$f00008,a0
 	move.l #$0fffff,a2
@@ -329,6 +360,18 @@ ReadDMA: ; d1 DMA channel (0-4) a1 address from read d2 size
 
 DMAret:
 	rts
+
+ClearIRQmask:
+	move.l #$f00000,a0
+	move.l #$0fffff,a2
+	moveq.l #4,d7
+	move.b #0,(a0)
+
+SetIRQmask:
+	move.l #$f00000,a0
+	move.l #$0fffff,a2
+	moveq.l #4,d7
+	move.b #$ff,(a0)	
 
 Exception:
    stop #$00

@@ -27,3 +27,9 @@
   |3| 0x00000-0x00008: DMA controller
   |4| 0x00000-0x00004: IRQ Controller
  ```
+
+ # TODO
+  - [ ] Implement IDE master-slave bus
+  - [x] Implement IRQ controller
+  - [ ] Add Keyboard controller
+  - [ ] Implement MMU

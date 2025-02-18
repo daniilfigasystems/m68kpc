@@ -3,68 +3,68 @@
                         	; ******************************************************************
 000000 000FF000         	dc.l   $000FF000      ; Initial stack pointer value
 000004 00000100         	dc.l   EntryPoint      ; Start of program
-000008 00000398         	dc.l   Exception       ; Bus error
-00000C 00000398         	dc.l   Exception       ; Address error
-000010 00000398         	dc.l   Exception       ; Illegal instruction
-000014 00000398         	dc.l   Exception       ; Division by zero
-000018 00000398         	dc.l   Exception       ; CHK exception
-00001C 00000398         	dc.l   Exception       ; TRAPV exception
-000020 00000398         	dc.l   Exception       ; Privilege violation
-000024 00000398         	dc.l   Exception       ; TRACE exception
-000028 00000398         	dc.l   Exception       ; Line-A emulator
-00002C 00000398         	dc.l   Exception       ; Line-F emulator
-000030 00000398         	dc.l   Exception       ; Unused (reserved)
-000034 00000398         	dc.l   Exception       ; Unused (reserved)
-000038 00000398         	dc.l   Exception       ; Unused (reserved)
-00003C 00000398         	dc.l   Exception       ; Unused (reserved)
-000040 00000398         	dc.l   Exception       ; Unused (reserved)
-000044 00000398         	dc.l   Exception       ; Unused (reserved)
-000048 00000398         	dc.l   Exception       ; Unused (reserved)
-00004C 00000398         	dc.l   Exception       ; Unused (reserved)
-000050 00000398         	dc.l   Exception       ; Unused (reserved)
-000054 00000398         	dc.l   Exception       ; Unused (reserved)
-000058 00000398         	dc.l   Exception       ; Unused (reserved)
-00005C 00000398         	dc.l   Exception       ; Unused (reserved)
-000060 00000398         	dc.l   Exception       ; Spurious exception
-000064 00000398         	dc.l   Exception       ; IRQ level 1
-000068 00000398         	dc.l   Exception       ; IRQ level 2
-00006C 00000398         	dc.l   Exception       ; IRQ level 3
-000070 00000398         	dc.l   Exception       ; IRQ level 4 (horizontal retrace interrupt)
-000074 00000398         	dc.l   Exception       ; IRQ level 5
-000078 00000398         	dc.l   Exception       ; IRQ level 6 (vertical retrace interrupt)
-00007C 00000398         	dc.l   Exception       ; IRQ level 7
-000080 00000398         	dc.l   Exception       ; TRAP #00 exception
-000084 00000398         	dc.l   Exception       ; TRAP #01 exception
-000088 00000398         	dc.l   Exception       ; TRAP #02 exception
-00008C 00000398         	dc.l   Exception       ; TRAP #03 exception
-000090 00000398         	dc.l   Exception       ; TRAP #04 exception
-000094 00000398         	dc.l   Exception       ; TRAP #05 exception
-000098 00000398         	dc.l   Exception       ; TRAP #06 exception
-00009C 00000398         	dc.l   Exception       ; TRAP #07 exception
-0000A0 00000398         	dc.l   Exception       ; TRAP #08 exception
-0000A4 00000398         	dc.l   Exception       ; TRAP #09 exception
-0000A8 00000398         	dc.l   Exception       ; TRAP #10 exception
-0000AC 00000398         	dc.l   Exception       ; TRAP #11 exception
-0000B0 00000398         	dc.l   Exception       ; TRAP #12 exception
-0000B4 00000398         	dc.l   Exception       ; TRAP #13 exception
-0000B8 00000398         	dc.l   Exception       ; TRAP #14 exception
-0000BC 00000398         	dc.l   Exception       ; TRAP #15 exception
-0000C0 00000398         	dc.l   Exception       ; Unused (reserved)
-0000C4 00000398         	dc.l   Exception       ; Unused (reserved)
-0000C8 00000398         	dc.l   Exception       ; Unused (reserved)
-0000CC 00000398         	dc.l   Exception       ; Unused (reserved)
-0000D0 00000398         	dc.l   Exception       ; Unused (reserved)
-0000D4 00000398         	dc.l   Exception       ; Unused (reserved)
-0000D8 00000398         	dc.l   Exception       ; Unused (reserved)
-0000DC 00000398         	dc.l   Exception       ; Unused (reserved)
-0000E0 00000398         	dc.l   Exception       ; Unused (reserved)
-0000E4 00000398         	dc.l   Exception       ; Unused (reserved)
-0000E8 00000398         	dc.l   Exception       ; Unused (reserved)
-0000EC 00000398         	dc.l   Exception       ; Unused (reserved)
-0000F0 00000398         	dc.l   Exception       ; Unused (reserved)
-0000F4 00000398         	dc.l   Exception       ; Unused (reserved)
-0000F8 00000398         	dc.l   Exception       ; Unused (reserved)
-0000FC 00000398         	dc.l   Exception       ; Unused (reserved)
+000008 000003BC         	dc.l   Exception       ; Bus error
+00000C 000003BC         	dc.l   Exception       ; Address error
+000010 000003BC         	dc.l   Exception       ; Illegal instruction
+000014 000003BC         	dc.l   Exception       ; Division by zero
+000018 000003BC         	dc.l   Exception       ; CHK exception
+00001C 000003BC         	dc.l   Exception       ; TRAPV exception
+000020 000003BC         	dc.l   Exception       ; Privilege violation
+000024 000003BC         	dc.l   Exception       ; TRACE exception
+000028 000003BC         	dc.l   Exception       ; Line-A emulator
+00002C 000003BC         	dc.l   Exception       ; Line-F emulator
+000030 000003BC         	dc.l   Exception       ; Unused (reserved)
+000034 000003BC         	dc.l   Exception       ; Unused (reserved)
+000038 000003BC         	dc.l   Exception       ; Unused (reserved)
+00003C 000003BC         	dc.l   Exception       ; Unused (reserved)
+000040 000003BC         	dc.l   Exception       ; Unused (reserved)
+000044 000003BC         	dc.l   Exception       ; Unused (reserved)
+000048 000003BC         	dc.l   Exception       ; Unused (reserved)
+00004C 000003BC         	dc.l   Exception       ; Unused (reserved)
+000050 000003BC         	dc.l   Exception       ; Unused (reserved)
+000054 000003BC         	dc.l   Exception       ; Unused (reserved)
+000058 000003BC         	dc.l   Exception       ; Unused (reserved)
+00005C 000003BC         	dc.l   Exception       ; Unused (reserved)
+000060 000003BC         	dc.l   Exception       ; Spurious exception
+000064 000003BC         	dc.l   Exception       ; IRQ level 1
+000068 000003BC         	dc.l   Exception       ; IRQ level 2
+00006C 000003BC         	dc.l   Exception       ; IRQ level 3
+000070 000003BC         	dc.l   Exception       ; IRQ level 4 (horizontal retrace interrupt)
+000074 000003BC         	dc.l   Exception       ; IRQ level 5
+000078 000003BC         	dc.l   Exception       ; IRQ level 6 (vertical retrace interrupt)
+00007C 000003BC         	dc.l   Exception       ; IRQ level 7
+000080 000003BC         	dc.l   Exception       ; TRAP #00 exception
+000084 000003BC         	dc.l   Exception       ; TRAP #01 exception
+000088 000003BC         	dc.l   Exception       ; TRAP #02 exception
+00008C 000003BC         	dc.l   Exception       ; TRAP #03 exception
+000090 000003BC         	dc.l   Exception       ; TRAP #04 exception
+000094 000003BC         	dc.l   Exception       ; TRAP #05 exception
+000098 000003BC         	dc.l   Exception       ; TRAP #06 exception
+00009C 000003BC         	dc.l   Exception       ; TRAP #07 exception
+0000A0 000003BC         	dc.l   Exception       ; TRAP #08 exception
+0000A4 000003BC         	dc.l   Exception       ; TRAP #09 exception
+0000A8 000003BC         	dc.l   Exception       ; TRAP #10 exception
+0000AC 000003BC         	dc.l   Exception       ; TRAP #11 exception
+0000B0 000003BC         	dc.l   Exception       ; TRAP #12 exception
+0000B4 000003BC         	dc.l   Exception       ; TRAP #13 exception
+0000B8 000003BC         	dc.l   Exception       ; TRAP #14 exception
+0000BC 000003BC         	dc.l   Exception       ; TRAP #15 exception
+0000C0 000003BC         	dc.l   Exception       ; Unused (reserved)
+0000C4 000003BC         	dc.l   Exception       ; Unused (reserved)
+0000C8 000003BC         	dc.l   Exception       ; Unused (reserved)
+0000CC 000003BC         	dc.l   Exception       ; Unused (reserved)
+0000D0 000003BC         	dc.l   Exception       ; Unused (reserved)
+0000D4 000003BC         	dc.l   Exception       ; Unused (reserved)
+0000D8 000003BC         	dc.l   Exception       ; Unused (reserved)
+0000DC 000003BC         	dc.l   Exception       ; Unused (reserved)
+0000E0 000003BC         	dc.l   Exception       ; Unused (reserved)
+0000E4 000003BC         	dc.l   Exception       ; Unused (reserved)
+0000E8 000003BC         	dc.l   Exception       ; Unused (reserved)
+0000EC 000003BC         	dc.l   Exception       ; Unused (reserved)
+0000F0 000003BC         	dc.l   Exception       ; Unused (reserved)
+0000F4 000003BC         	dc.l   Exception       ; Unused (reserved)
+0000F8 000003BC         	dc.l   Exception       ; Unused (reserved)
+0000FC 000003BC         	dc.l   Exception       ; Unused (reserved)
 
 
 000100                  EntryPoint:           ; Entry point address set in ROM header
@@ -79,10 +79,10 @@
 000106                  Main:
 000106 227C 00000400    	move.l #1024,a1
 00010C 123C 0000        	move.b #0,d1
-000110 343C 0400        	move.w #1024,d2
+000110 343C 0EFF        	move.w #$0eff,d2
 000114 6100 0204        	bsr ReadDMA
-000118 43F9 0000039C    	lea.l string,a1
-rom.asm:85: *** Warning:  Short branch could be used here ***
+000118 43F9 000003C0    	lea.l string,a1
+src/rom.asm:85: *** Warning:  Short branch could be used here ***
 00011E 6100 001E        	bsr Printstring
 000122 7200             	moveq.l #0,d1
 000124 7400             	moveq.l #0,d2
@@ -137,7 +137,7 @@ rom.asm:85: *** Warning:  Short branch could be used here ***
 
 000194                  itoa: ; d1 input value a1 string address d2 base
 000194 0C41 0000        	cmpi #0,d1
-rom.asm:139: *** Warning:  Short branch could be used here ***
+src/rom.asm:139: *** Warning:  Short branch could be used here ***
 000198 6600 0010        	bne itoamain
 00019C 2609             	move.l a1,d3
 00019E 163C 0030        	move.b #'0',d3
@@ -153,7 +153,7 @@ rom.asm:139: *** Warning:  Short branch could be used here ***
 0001B4 0284 0000FFFF    	andi.l #$ffff,d4
 0001BA 3204             	move.w d4,d1
 0001BC 0C43 0009        	cmpi.w #9,d3
-rom.asm:154: *** Warning:  Short branch could be used here ***
+src/rom.asm:154: *** Warning:  Short branch could be used here ***
 0001C0 6E00 000C        	bgt itoaadd
 0001C4 D67C 0030        	add.w #'0',d3
 0001C8 4EF9 000001D6    	jmp itoacon
@@ -288,7 +288,7 @@ rom.asm:154: *** Warning:  Short branch could be used here ***
 00031A                  ReadDMA: ; d1 DMA channel (0-4) a1 address from read d2 size
 00031A 6100 FF6E        	bsr IsreadyDMA
 00031E 4A40             	tst d0
-rom.asm:288: *** Warning:  Short branch could be used here ***
+src/rom.asm:288: *** Warning:  Short branch could be used here ***
 000320 6700 0074        	beq DMAret
 000324 207C 00F00000    	move.l #$f00000,a0
 00032A 247C 000FFFFF    	move.l #$0fffff,a2
@@ -334,19 +334,32 @@ rom.asm:288: *** Warning:  Short branch could be used here ***
 000396                  DMAret:
 000396 4E75             	rts
 
-000398                  Exception:
-000398 4E72 0000           stop #$00
+000398                  ClearIRQmask:
+000398 207C 00F00000    	move.l #$f00000,a0
+00039E 247C 000FFFFF    	move.l #$0fffff,a2
+0003A4 7E04             	moveq.l #4,d7
+0003A6 10BC 0000        	move.b #0,(a0)
 
-00039C                  string:
-00039C 68656C6C6F20776F 	dc.b "hello world!\n",0
-0003A4 726C64210A00
-0003AA                  tux:
-0003AA 6C696E757800     	dc.b "linux",0
+0003AA                  SetIRQmask:
+0003AA 207C 00F00000    	move.l #$f00000,a0
+0003B0 247C 000FFFFF    	move.l #$0fffff,a2
+0003B6 7E04             	moveq.l #4,d7
+0003B8 10BC 00FF        	move.b #$ff,(a0)	
 
-DMARET             00000396    DRAWSCREEN         0000014E    ENTRYPOINT         00000100
-EXCEPTION          00000398    ISREADYDMA         0000028A    ITOA               00000194
-ITOAADD            000001CE    ITOACON            000001D6    ITOAMAIN           000001AA
-MAIN               00000106    PRINTCHAR          00000136    PRINTSTRING        0000013E
-READDMA            0000031A    READTIMER          00000170    SETADDRESSDISK     000001E8
-STRING             0000039C    TUX                000003AA    WRITEDISK          00000238
-WRITEDMA           000002A0    WRITETIMER         00000182
+0003BC                  Exception:
+0003BC 4E72 0000           stop #$00
+
+0003C0                  string:
+0003C0 68656C6C6F20776F 	dc.b "hello world!\n",0
+0003C8 726C64210A00
+0003CE                  tux:
+0003CE 6C696E757800     	dc.b "linux",0
+
+CLEARIRQMASK       00000398    DMARET             00000396    DRAWSCREEN         0000014E
+ENTRYPOINT         00000100    EXCEPTION          000003BC    ISREADYDMA         0000028A
+ITOA               00000194    ITOAADD            000001CE    ITOACON            000001D6
+ITOAMAIN           000001AA    MAIN               00000106    PRINTCHAR          00000136
+PRINTSTRING        0000013E    READDMA            0000031A    READTIMER          00000170
+SETADDRESSDISK     000001E8    SETIRQMASK         000003AA    STRING             000003C0
+TUX                000003CE    WRITEDISK          00000238    WRITEDMA           000002A0
+WRITETIMER         00000182
