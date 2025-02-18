@@ -12,6 +12,8 @@
   Timer implements 16 bit count register and interrupt support
  ## IRQ controller
   IRQ Controller implements 8 IRQ's
+ ## ISA bus
+  ISA bus implements 16 lines addressable up to 1mb
 
 # Memory map
  ## Main Memory map:
