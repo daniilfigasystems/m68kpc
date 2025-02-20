@@ -7,6 +7,8 @@ unsigned int  m68k_read_disassembler_32(unsigned int address);
 void m68k_write_memory_8(unsigned int address, unsigned int value);
 void m68k_write_memory_16(unsigned int address, unsigned int value);
 void m68k_write_memory_32(unsigned int address, unsigned int value);
+unsigned int kb_read_8(unsigned int address);
+void kb_write_8(unsigned int address, unsigned int value);
 unsigned int ic_read_8(unsigned int address);
 void ic_write_8(unsigned int address, unsigned int value);
 void ic_register();
@@ -60,13 +62,19 @@ void isa_bus_update();
 #define ISA_BUS_OFS 0xf00000
 #define ISA_BUS_SELOFS 0x0fffff
 #define ISA_BUS_COUNT 16
-#define ISA_DEVICES_COUNT 5
+#define ISA_DEVICES_COUNT 6
 
 unsigned int stop = 0;
-FILE *hddfile;
+FILE *hddfile, *hddfile1;
 unsigned char *mem, *vmem;
 SDL_Window *window;
 SDL_Renderer *renderer;
+struct kb_register
+{
+    unsigned char KBKEY;
+    unsigned char STATUS;
+} kb_reg;
+
 struct irq_register
 {
     unsigned char IRQPD;
@@ -86,6 +94,7 @@ struct dma_register
 
 struct ide_register
 {
+    unsigned char IDESEL : 1;
     unsigned short DL;
     unsigned short DH;
 } ide_reg;
@@ -178,6 +187,16 @@ struct
         .writefunc = ic_write_8,
         .registerfunc = ic_register,
     },
+
+    {
+        .name = "Keybaord Controller",
+        .address = 0x00000,
+        .size = 0x02,
+        .id = 5,
+        .irq = 4,
+        .readfunc = kb_read_8,
+        .writefunc = kb_write_8,
+    }
 };
 
 unsigned int  m68k_read_memory_8(unsigned int address)
@@ -273,6 +292,31 @@ void m68k_write_memory_32(unsigned int address, unsigned int value)
         printf("[wr32] wrong address! (0x%08x)\n", address);
 
     // printf("[wr32] %x %x\n", address, value);
+}
+
+unsigned int kb_read_8(unsigned int address)
+{
+    switch(address)
+    {
+        case 0x00:
+            unsigned char kbkey_old = kb_reg.KBKEY;
+            kb_reg.KBKEY = 0;
+            return kbkey_old;
+        case 0x01:
+            return kb_reg.STATUS;
+    }
+
+    return 0;
+}
+
+void kb_write_8(unsigned int address, unsigned int value)
+{
+    switch(address)
+    {
+        case 0x01:
+            kb_reg.STATUS ^= (value & 0xf0);
+            break;
+    }
 }
 
 unsigned int ic_read_8(unsigned int address)
@@ -398,9 +442,16 @@ unsigned int ide_read_8(unsigned int address)
     {
         case 0x00:
             unsigned char buf;
-            fseek(hddfile, (ide_reg.DH << 16) | (ide_reg.DL & 0xffff), SEEK_SET);
-            fread(&buf, sizeof(unsigned char), 1, hddfile);
+            FILE *f;
+            if (ide_reg.IDESEL & 1)
+                f = hddfile1;
+            else
+                f = hddfile;
+            fseek(f, (ide_reg.DH << 16) | (ide_reg.DL & 0xffff), SEEK_SET);
+            fread(&buf, sizeof(unsigned char), 1, f);
             return buf;
+        case 0x05:
+            return ide_reg.IDESEL;
     }
 
     return 0;
@@ -414,8 +465,13 @@ void ide_write_8(unsigned int address, unsigned int value)
         case 0x00:
             unsigned char buf;
             buf = value & 0xff;
-            fseek(hddfile, (ide_reg.DH << 16) | (ide_reg.DL & 0xffff), SEEK_SET);
-            fwrite(&buf, sizeof(unsigned char), 1, hddfile);
+            FILE *f;
+            if (ide_reg.IDESEL & 1)
+                f = hddfile1;
+            else
+                f = hddfile;
+            fseek(f, (ide_reg.DH << 16) | (ide_reg.DL & 0xffff), SEEK_SET);
+            fwrite(&buf, sizeof(unsigned char), 1, f);
             break;
         case 0x01:
             ide_reg.DL = value & 0xff;
@@ -429,17 +485,22 @@ void ide_write_8(unsigned int address, unsigned int value)
         case 0x04:
             ide_reg.DH |= (value & 0xff) << 8;
             break;
+        case 0x05:
+            ide_reg.IDESEL = value & 0x01;
+            break;
     }
 }
 
 void ide_register()
 {
     hddfile = fopen("hdd.img", "rb+");
+    hddfile1 = fopen("hdd1.img", "rb+");
 }
 
 void ide_exit()
 {
     fclose(hddfile);
+    fclose(hddfile1);
 }
 
 void ide_dma_transfer(unsigned int address, unsigned int size, unsigned char rw)
@@ -683,12 +744,19 @@ int main(int argc, char *argv[])
 
     while (!stop)
     {
-        usleep(75000);
-        m68k_execute(1);
+        m68k_execute(100);
         fflush(stdout);
         while (SDL_PollEvent(&event) == 1) {
             if (event.type == SDL_QUIT) {
                 stop = 1;
+            }
+            else if (event.type == SDL_KEYDOWN) {
+                kb_reg.KBKEY = event.key.keysym.sym;
+                ic_set(isa_desc[5].irq);
+                kb_reg.STATUS |= (1 << 0);
+            }
+            else if (event.type == SDL_KEYUP) {
+                kb_reg.STATUS &= ~(1 << 0);
             }
         }
 
@@ -698,4 +766,5 @@ int main(int argc, char *argv[])
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+    abortex(0);
 }

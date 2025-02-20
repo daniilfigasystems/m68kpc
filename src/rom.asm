@@ -77,6 +77,8 @@ EntryPoint:           ; Entry point address set in ROM header
 ; Main
 ; ************************************
 Main:
+	move.b #0,d2
+	bsr Selectdisk
 	move.l #1024,a1
 	move.b #0,d1
 	move.w #$0eff,d2
@@ -167,6 +169,14 @@ itoacon:
 	bne itoamain
 	rts
 
+Selectdisk: ; d1 disk selection (master-slave)
+	move.l #$f00005,a0
+	move.l #$0fffff,a2
+	moveq.l #2,d7
+	move.b d7,(a2)
+	move.b d1,(a0)
+	rts
+
 Setaddressdisk: ; a1 disk address
 	move.l #$f00000,a0
 	move.l #$0fffff,a2
@@ -228,7 +238,7 @@ Writedisk: ; d1 data a1 disk address
 	move.b d1,(a0)
 	rts
 
-	Readdisk: ; d1 data a1 disk address
+Readdisk: ; d1 data a1 disk address
 	move.l #$f00000,a0
 	move.l #$0fffff,a2
 	moveq.l #2,d7
@@ -365,18 +375,32 @@ ClearIRQmask:
 	move.l #$f00000,a0
 	move.l #$0fffff,a2
 	moveq.l #4,d7
+	move.b d7,(a2)
 	move.b #0,(a0)
+	rts
 
 SetIRQmask:
 	move.l #$f00000,a0
 	move.l #$0fffff,a2
 	moveq.l #4,d7
-	move.b #$ff,(a0)	
+	move.b d7,(a2)
+	move.b #$ff,(a0)
+	rts
+
+SetIRQbit: ; d1 bits number (0 - 7)
+	move.l #$f00000,a0
+	move.l #$0fffff,a2
+	moveq.l #4,d7
+	move.b d7,(a2)
+	move.b d1,(a0)
+	rts
 
 Exception:
-   stop #$00
+	lea.l tux,a1
+	bsr Printstring
+	stop #$00
 
 string: 
-	dc.b "hello world!\n",0
+	dc.b "ROM version 0.02\n",0
 tux:
-	dc.b "linux",0
+	dc.b "Exception caught!\n",0

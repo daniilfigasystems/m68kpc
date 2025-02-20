@@ -25,13 +25,13 @@
  ```
   |0| 0x00000-0x12c00: Video controller
   |1| 0x00000-0x00002: Timer
-  |2| 0x00000-0x00004: IDE controller
+  |2| 0x00000-0x00005: IDE controller
   |3| 0x00000-0x00008: DMA controller
   |4| 0x00000-0x00004: IRQ Controller
  ```
 
  # TODO
-  - [ ] Implement IDE master-slave bus
+  - [x] Implement IDE master-slave bus
   - [x] Implement IRQ controller
-  - [ ] Add Keyboard controller
+  - [X] Add Keyboard controller
   - [ ] Implement MMU
