@@ -27,7 +27,8 @@
   |1| 0x00000-0x00002: Timer
   |2| 0x00000-0x00005: IDE controller
   |3| 0x00000-0x00008: DMA controller
-  |4| 0x00000-0x00004: IRQ Controller
+  |4| 0x00000-0x00004: IRQ controller
+  |5| 0x00000-0x00002: Keyboard controller
  ```
 
  # TODO
