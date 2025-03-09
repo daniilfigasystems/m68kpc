@@ -28,10 +28,10 @@
 	dc.l   Exception       ; Spurious exception
 	dc.l   Exception       ; IRQ level 1
 	dc.l   Exception       ; IRQ level 2
-	dc.l   Exception       ; IRQ level 3
-	dc.l   Exception       ; IRQ level 4 (horizontal retrace interrupt)
+	dc.l   DMAdone		   ; IRQ level 3 (DMA)
+	dc.l   Exception       ; IRQ level 4
 	dc.l   Exception       ; IRQ level 5
-	dc.l   Exception       ; IRQ level 6 (vertical retrace interrupt)
+	dc.l   Exception       ; IRQ level 6
 	dc.l   Exception       ; IRQ level 7
 	dc.l   Exception       ; TRAP #00 exception
 	dc.l   Exception       ; TRAP #01 exception
@@ -77,19 +77,20 @@ EntryPoint:           ; Entry point address set in ROM header
 ; Main
 ; ************************************
 Main:
+	lea.l ver,a1
+	bsr Printstring
 	move.b #0,d2
 	bsr Selectdisk
-	move.l #1024,a1
+	move.l #$80001,a1
 	move.b #0,d1
 	move.w #$0eff,d2
 	bsr ReadDMA
-	lea.l string,a1
-	bsr Printstring
 	moveq.l #0,d1
 	moveq.l #0,d2
 	moveq #1,d3
-	move.l #1028,a1
+	move.l #$80001,a1
 	move.l (a1),d2
+	lea.l pcdesc,a2
 	jmp (a1)
 	stop #$00
 
@@ -269,7 +270,7 @@ Readdisk: ; d1 data a1 disk address
 	move.b (a0),d1
 	rts
 
-IsreadyDMA:
+IsreadyDMA: ; d0 return value
 	move.l #$f00008,a0
 	move.l #$0fffff,a2
 	moveq.l #3,d7
@@ -371,6 +372,11 @@ ReadDMA: ; d1 DMA channel (0-4) a1 address from read d2 size
 DMAret:
 	rts
 
+DMAdone:
+	bsr IsreadyDMA
+	cmpi.b #$80,d0
+	rte
+
 ClearIRQmask:
 	move.l #$f00000,a0
 	move.l #$0fffff,a2
@@ -388,19 +394,48 @@ SetIRQmask:
 	rts
 
 SetIRQbit: ; d1 bits number (0 - 7)
-	move.l #$f00000,a0
+	move.l #$f00002,a0
 	move.l #$0fffff,a2
 	moveq.l #4,d7
 	move.b d7,(a2)
+	move.b (a0),d0
+	or.b d1,d0
+	move.b d1,(a0)
+	rts
+ClearIRQbit: ; d1 bits number (0 - 7)
+	move.l #$f00002,a0
+	move.l #$0fffff,a2
+	moveq.l #4,d7
+	move.b d7,(a2)
+	move.b (a0),d0
+	eor.b d1,d1
+	and.b d1,d0
 	move.b d1,(a0)
 	rts
 
-Exception:
-	lea.l tux,a1
-	bsr Printstring
-	stop #$00
+ReadKBkey: ; d1 return key
+	move.l #$f00000,a0
+	move.l #$0fffff,a2
+	moveq.l #5,d7
+	move.b d7,(a2)
+	move.b (a0),d1
+	rts
 
-string: 
+Exception:
+	rte
+
+ver: 
 	dc.b "ROM version 0.02\n",0
-tux:
+exceptioncaught:
 	dc.b "Exception caught!\n",0
+pcdesc:
+	dc.b "m68kpc",0 ; computer model
+	dc.b "68000",0 ; processor type
+	dc.l 4194304 ; mem size
+	dc.l $5000 ; debug UART address
+	dc.b 1 ; dma present
+	dc.b 1 ; hard disks present
+	dc.b 0 ; floppy present
+	dc.b 1 ; keyboard present
+	dc.b 1 ; screen present
+	dc.b 1 ; timer present

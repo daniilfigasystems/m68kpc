@@ -11,6 +11,7 @@ unsigned int kb_read_8(unsigned int address);
 void kb_write_8(unsigned int address, unsigned int value);
 unsigned int ic_read_8(unsigned int address);
 void ic_write_8(unsigned int address, unsigned int value);
+void ic_update();
 void ic_register();
 void ic_set(unsigned char irq);
 void ic_clear(unsigned char irq);
@@ -57,7 +58,12 @@ void isa_bus_update();
 #include <SDL2/SDL.h>
 #include "m68k.h"
 
+#define ROM_START (0x0000)
+#define ROM_SIZE (1024 * 512)
+#define ROM_END (ROM_START + ROM_SIZE)
+#define MEM_START (ROM_END + 1)
 #define MEM_SIZE (1024 * 1024 * 4)
+#define MEM_END (MEM_START + MEM_SIZE)
 #define ISA_BUS_SIZE (1024 * 1024 * 1)
 #define ISA_BUS_OFS 0xf00000
 #define ISA_BUS_SELOFS 0x0fffff
@@ -66,7 +72,7 @@ void isa_bus_update();
 
 unsigned int stop = 0;
 FILE *hddfile, *hddfile1;
-unsigned char *mem, *vmem;
+unsigned char *mem, *vmem, *rom;
 SDL_Window *window;
 SDL_Renderer *renderer;
 struct kb_register
@@ -185,11 +191,12 @@ struct
         .id = 4,
         .readfunc = ic_read_8,
         .writefunc = ic_write_8,
+        .updatefunc = ic_update,
         .registerfunc = ic_register,
     },
 
     {
-        .name = "Keybaord Controller",
+        .name = "Keyboard Controller",
         .address = 0x00000,
         .size = 0x02,
         .id = 5,
@@ -205,8 +212,10 @@ unsigned int  m68k_read_memory_8(unsigned int address)
 
     if (address >= ISA_BUS_OFS && address <= ISA_BUS_OFS + ISA_BUS_SIZE)
         return isa_bus_read_8(address, isa_bus.sel & 0xf);
-    else if (address <= MEM_SIZE)
-        return READ_BYTE(mem, address);
+    else if (address >= ROM_START && address <= ROM_END)
+        return READ_BYTE(rom, address - ROM_START);
+    else if (address >= MEM_START && address <= MEM_END)
+        return READ_BYTE(mem, address - MEM_START);
     else
         printf("[rd8] wrong address! (0x%08x)\n", address);
     
@@ -216,9 +225,14 @@ unsigned int  m68k_read_memory_8(unsigned int address)
 unsigned int  m68k_read_memory_16(unsigned int address)
 {
     // printf("[rd16] %x\n", address);
-    if (address <= MEM_SIZE)
+
+    if (address >= ROM_START && address <= ROM_END)
     {
-        return READ_WORD(mem, address);
+        return READ_WORD(rom, address - ROM_START);
+    }
+    else if (address >= MEM_START && address <= MEM_END)
+    {
+        return READ_WORD(mem, address - MEM_START);
     }
     else
         printf("[rd16] wrong address! (0x%08x)\n", address);
@@ -229,9 +243,14 @@ unsigned int  m68k_read_memory_16(unsigned int address)
 unsigned int  m68k_read_memory_32(unsigned int address)
 {
     // printf("[rd32] %x\n", address);
-    if (address <= MEM_SIZE)
+
+    if (address >= ROM_START && address <= ROM_END)
     {
-        return READ_LONG(mem, address);
+        return READ_LONG(rom, address - ROM_START);
+    }
+    else if (address >= MEM_START && address <= MEM_END)
+    {
+        return READ_LONG(mem, address - MEM_START);
     }
     else
         printf("[rd32] wrong address! (0x%08x)\n", address);
@@ -241,17 +260,50 @@ unsigned int  m68k_read_memory_32(unsigned int address)
 
 unsigned int  m68k_read_disassembler_8(unsigned int address)
 {
-    return READ_BYTE(mem, address);
+    if (address >= ROM_START && address <= ROM_END)
+        return READ_BYTE(rom, address - ROM_START);
+    else if (address >= MEM_START && address <= MEM_END)
+        return READ_BYTE(mem, address - MEM_START);
+    else
+        printf("[rd8] wrong address! (0x%08x)\n", address);
+    
+    return 0;
 }
 
 unsigned int  m68k_read_disassembler_16(unsigned int address)
 {
-    return READ_WORD(mem, address);
+    // printf("[rd16] %x\n", address);
+
+    if (address >= ROM_START && address <= ROM_END)
+    {
+        return READ_WORD(rom, address - ROM_START);
+    }
+    else if (address >= MEM_START && address <= MEM_END)
+    {
+        return READ_WORD(mem, address - MEM_START);
+    }
+    else
+        printf("[rd16] wrong address! (0x%08x)\n", address);
+    
+    return 0;
 }
 
 unsigned int  m68k_read_disassembler_32(unsigned int address)
 {
-    return READ_LONG(mem, address);
+    // printf("[rd32] %x\n", address);
+
+    if (address >= ROM_START && address <= ROM_END)
+    {
+        return READ_LONG(rom, address - ROM_START);
+    }
+    else if (address >= MEM_START && address <= MEM_END)
+    {
+        return READ_LONG(mem, address - MEM_START);
+    }
+    else
+        printf("[rd32] wrong address! (0x%08x)\n", address);
+    
+    return 0;
 }
 
 void m68k_write_memory_8(unsigned int address, unsigned int value)
@@ -262,8 +314,10 @@ void m68k_write_memory_8(unsigned int address, unsigned int value)
         isa_bus.sel = value & 0xf;
     else if (address == 0x5000)
         printf("%c", value);
-    else if (address <= MEM_SIZE)
-        WRITE_BYTE(mem, address, value);
+    else if (address >= ROM_START && address <= ROM_END)
+        printf("[wr8] can't write to rom! (0x%08x)\n", address);
+    else if (address >= MEM_START && address <= MEM_END)
+        WRITE_BYTE(mem, address - MEM_START, value);
     else
         printf("[wr8] wrong address! (0x%08x)\n", address);
 
@@ -272,9 +326,11 @@ void m68k_write_memory_8(unsigned int address, unsigned int value)
 
 void m68k_write_memory_16(unsigned int address, unsigned int value)
 {
-    if (address <= MEM_SIZE)
+    if (address >= ROM_START && address <= ROM_END)
+        printf("[wr16] can't write to rom! (0x%08x)\n", address);
+    else if (address >= MEM_START && address <= MEM_END)
     {
-        WRITE_WORD(mem, address, value);
+        WRITE_WORD(mem, address - MEM_START, value);
     }
     else
         printf("[wr16] wrong address! (0x%08x)\n", address);
@@ -284,9 +340,11 @@ void m68k_write_memory_16(unsigned int address, unsigned int value)
 
 void m68k_write_memory_32(unsigned int address, unsigned int value)
 {
-    if (address <= MEM_SIZE)
+    if (address >= ROM_START && address <= ROM_END)
+        printf("[wr32] can't write to rom! (0x%08x)\n", address);
+    else if (address >= MEM_START && address <= MEM_END)
     {
-        WRITE_LONG(mem, address, value);
+        WRITE_LONG(mem, address - MEM_START, value);
     }
     else
         printf("[wr32] wrong address! (0x%08x)\n", address);
@@ -342,6 +400,12 @@ void ic_write_8(unsigned int address, unsigned int value)
             irq_reg.IRQMASK = value & 0xff;
             break;
     }
+}
+
+void ic_update()
+{
+    for (unsigned int i = 0; i < 8; i++)
+        ic_clear(i);
 }
 
 void ic_register()
@@ -506,12 +570,16 @@ void ide_exit()
 void ide_dma_transfer(unsigned int address, unsigned int size, unsigned char rw)
 {
     printf("dma transfer %x %x\n", rw, size);
+
+    unsigned char value;
+
     if (rw == 1)
     {
         for (unsigned int i = 0; i < size + 1; i++)
         {
             printf("[IDE] DMA transfer transaction from (0x%08x) to (0x%08x) value=%x rw=%x\n", address + i, (ide_reg.DH << 16) | (ide_reg.DL & 0xffff), mem[address + i], rw);
-            ide_write_8(0, mem[address + i]);
+            value = m68k_read_memory_8(address + i);
+            ide_write_8(0, value);
             if (ide_reg.DL >= 65535)
             {
                 ide_reg.DH++;
@@ -519,15 +587,14 @@ void ide_dma_transfer(unsigned int address, unsigned int size, unsigned char rw)
             }
             ide_reg.DL++;
         }
-
-        printf("[IDE] DMA transfer transaction done. %d bytes transfered\n", size);
     }
     else
     {
         for (unsigned int i = 0; i < size; i++)
         {
-            mem[address + i] = ide_read_8(0);
             printf("[IDE] DMA transfer transaction from (0x%08x) to (0x%08x) value=%x rw=%x\n", (ide_reg.DH << 16) | (ide_reg.DL & 0xffff), address + i, mem[address + i], rw);
+            value = ide_read_8(0);
+            m68k_write_memory_8(address + i, value);
             if (ide_reg.DL >= 65535)
             {
                 ide_reg.DH++;
@@ -536,6 +603,8 @@ void ide_dma_transfer(unsigned int address, unsigned int size, unsigned char rw)
             ide_reg.DL++;
         }
     }
+
+    printf("[IDE] DMA transfer transaction done. %d bytes transfered\n", size);
 }
 
 unsigned int timer_read_8(unsigned int address)
@@ -574,6 +643,7 @@ void timer_update()
 
 void timer_register()
 {
+    timer_reg.timercount = 0;
 }
 
 void video_write_8(unsigned int vaddr, unsigned int value)
@@ -663,7 +733,7 @@ void m68k_showregs()
 
 void m68k_int_ack(int irq)
 {
-    // printf("ack %d\n", irq);
+    printf("ack %d\n", irq);
 }
 
 void m68k_fc_call(unsigned int fc)
@@ -724,12 +794,13 @@ int main(int argc, char *argv[])
             isa_bus.exitfuncs[isa_desc[i].id] = isa_desc[i].exitfunc;
     }
     mem = malloc(MEM_SIZE);
+    rom = malloc(ROM_SIZE);
     FILE *f = fopen(argv[1], "rb");
     fseek(f, 0, SEEK_END);
     unsigned int size = ftell(f);
     printf("Size: %d bytes\n", size);
     fseek(f, 0, SEEK_SET);
-    fread(mem, sizeof(unsigned char), size, f);
+    fread(rom, sizeof(unsigned char), size, f);
     fclose(f);
     signal(SIGINT, abortex);
     video_register();
@@ -747,15 +818,18 @@ int main(int argc, char *argv[])
         m68k_execute(100);
         fflush(stdout);
         while (SDL_PollEvent(&event) == 1) {
-            if (event.type == SDL_QUIT) {
+            if (event.type == SDL_QUIT) 
+            {
                 stop = 1;
             }
-            else if (event.type == SDL_KEYDOWN) {
+            else if (event.type == SDL_KEYDOWN) 
+            {
                 kb_reg.KBKEY = event.key.keysym.sym;
                 ic_set(isa_desc[5].irq);
                 kb_reg.STATUS |= (1 << 0);
             }
-            else if (event.type == SDL_KEYUP) {
+            else if (event.type == SDL_KEYUP) 
+            {
                 kb_reg.STATUS &= ~(1 << 0);
             }
         }
