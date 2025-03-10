@@ -79,20 +79,24 @@ EntryPoint:           ; Entry point address set in ROM header
 Main:
 	lea.l ver,a1
 	bsr Printstring
-	move.b #0,d2
-	bsr Selectdisk
-	move.l #$80001,a1
-	move.b #0,d1
-	move.w #$0eff,d2
-	bsr ReadDMA
-	moveq.l #0,d1
-	moveq.l #0,d2
-	moveq #1,d3
-	move.l #$80001,a1
-	move.l (a1),d2
-	lea.l pcdesc,a2
-	jmp (a1)
+	moveq.l #0,d6
+	move.l #150,d1
+	move.l #105,d2
+	lea.l tux,a4
+loop:
+	move.b (a4),d3
+	bsr Drawscreen
+	addq.l #1,a4
+	addq.l #1,d1
+	cmpi.w #165,d1
+	beq loop2
+	cmpi.w #115,d2
+	ble loop
 	stop #$00
+loop2:
+	addq.l #1,d2
+	move.l #150,d1
+	jmp loop
 
 Printchar: ; d1 character
 	move.w #$5000,a0
@@ -114,9 +118,9 @@ Drawscreen: ; d1 x d2 y d3 color
 	move.l #$0fffff,a1
 	moveq.l #0,d7
 	move.b d7,(a1)
-	move.w #320,d4
+	move.l #320,d4
 	mulu.w d2,d4
-	add.w d1,d4
+	add.l d1,d4
 	move.l a0,d5
 	add.l d5,d4
 	move.l d4,a2
@@ -424,6 +428,18 @@ ReadKBkey: ; d1 return key
 Exception:
 	rte
 
+tux:
+	dc.b 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0
+	dc.b 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0
+	dc.b 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1
+	dc.b 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1
+	dc.b 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0
+	dc.b 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0
+	dc.b 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0
+	dc.b 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0
+	dc.b 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0
+	dc.b 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0
+	dc.b 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
 ver: 
 	dc.b "ROM version 0.02\n",0
 exceptioncaught:

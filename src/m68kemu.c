@@ -648,21 +648,25 @@ void timer_register()
 
 void video_write_8(unsigned int vaddr, unsigned int value)
 {
-    // printf("Write video! 0x%05x rgb:%01x%01x%01x xy:%dx%d\n", vaddr, value & 0x04, (value >> 2) & 0x08, (value >> 5) & 0x04, vaddr % 320, vaddr / 240);
+    // printf("Write video! 0x%05x color:%d xy:%dx%d\n", vaddr, value & 0x01, vaddr % 320, vaddr / 320);
     vmem[vaddr] = value & 0xff;
-    SDL_SetRenderDrawColor(renderer, (value & 0x01) ? 255 : 0, (value & 0x01) ? 255 : 0, (value & 0x01) ? 255 : 0, (value & 0x01) ? 255 : 0);
     // SDL_SetRenderDrawColor(renderer, (value & 0x04), ((value >> 2) & 0x08), ((value >> 5) & 0x04), 255);
-    SDL_RenderDrawPoint(renderer, vaddr % 320, vaddr / 240);
 }
 
 void video_update()
 {
+    for (unsigned int i = 0; i < isa_desc[0].size; i++)
+    {
+        SDL_SetRenderDrawColor(renderer, (vmem[i] & 0x01) ? 255 : 0, (vmem[i] & 0x01) ? 255 : 0, (vmem[i] & 0x01) ? 255 : 0, (vmem[i] & 0x01) ? 255 : 0);
+        SDL_RenderDrawPoint(renderer, i % 320, i / 320);
+    }
     SDL_RenderPresent(renderer);
 }
 
 void video_register()
 {
     vmem = malloc(isa_desc[0].size);
+    memset(vmem, 0, isa_desc[0].size);
 }
 
 void video_exit()
@@ -682,6 +686,7 @@ unsigned int isa_bus_read_8(unsigned int address, unsigned char isel)
 void isa_bus_write_8(unsigned int address, unsigned int value, unsigned char isel)
 {
     // printf("isel %d\n", isel);
+    // printf("addr 0x%08x\n", address);
     isa_bus.writefuncs[isel](address - ISA_BUS_OFS, value);
 }
 
@@ -815,7 +820,8 @@ int main(int argc, char *argv[])
 
     while (!stop)
     {
-        m68k_execute(100);
+        usleep(2000);
+        m68k_execute(1);
         fflush(stdout);
         while (SDL_PollEvent(&event) == 1) {
             if (event.type == SDL_QUIT) 

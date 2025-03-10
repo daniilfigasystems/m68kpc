@@ -3,68 +3,68 @@
                         	; ******************************************************************
 000000 000FF000         	dc.l   $000FF000      ; Initial stack pointer value
 000004 00000100         	dc.l   EntryPoint      ; Start of program
-000008 00000488         	dc.l   Exception       ; Bus error
-00000C 00000488         	dc.l   Exception       ; Address error
-000010 00000488         	dc.l   Exception       ; Illegal instruction
-000014 00000488         	dc.l   Exception       ; Division by zero
-000018 00000488         	dc.l   Exception       ; CHK exception
-00001C 00000488         	dc.l   Exception       ; TRAPV exception
-000020 00000488         	dc.l   Exception       ; Privilege violation
-000024 00000488         	dc.l   Exception       ; TRACE exception
-000028 00000488         	dc.l   Exception       ; Line-A emulator
-00002C 00000488         	dc.l   Exception       ; Line-F emulator
-000030 00000488         	dc.l   Exception       ; Unused (reserved)
-000034 00000488         	dc.l   Exception       ; Unused (reserved)
-000038 00000488         	dc.l   Exception       ; Unused (reserved)
-00003C 00000488         	dc.l   Exception       ; Unused (reserved)
-000040 00000488         	dc.l   Exception       ; Unused (reserved)
-000044 00000488         	dc.l   Exception       ; Unused (reserved)
-000048 00000488         	dc.l   Exception       ; Unused (reserved)
-00004C 00000488         	dc.l   Exception       ; Unused (reserved)
-000050 00000488         	dc.l   Exception       ; Unused (reserved)
-000054 00000488         	dc.l   Exception       ; Unused (reserved)
-000058 00000488         	dc.l   Exception       ; Unused (reserved)
-00005C 00000488         	dc.l   Exception       ; Unused (reserved)
-000060 00000488         	dc.l   Exception       ; Spurious exception
-000064 00000488         	dc.l   Exception       ; IRQ level 1
-000068 00000488         	dc.l   Exception       ; IRQ level 2
-00006C 0000040C         	dc.l   DMAdone		   ; IRQ level 3 (DMA)
-000070 00000488         	dc.l   Exception       ; IRQ level 4
-000074 00000488         	dc.l   Exception       ; IRQ level 5
-000078 00000488         	dc.l   Exception       ; IRQ level 6
-00007C 00000488         	dc.l   Exception       ; IRQ level 7
-000080 00000488         	dc.l   Exception       ; TRAP #00 exception
-000084 00000488         	dc.l   Exception       ; TRAP #01 exception
-000088 00000488         	dc.l   Exception       ; TRAP #02 exception
-00008C 00000488         	dc.l   Exception       ; TRAP #03 exception
-000090 00000488         	dc.l   Exception       ; TRAP #04 exception
-000094 00000488         	dc.l   Exception       ; TRAP #05 exception
-000098 00000488         	dc.l   Exception       ; TRAP #06 exception
-00009C 00000488         	dc.l   Exception       ; TRAP #07 exception
-0000A0 00000488         	dc.l   Exception       ; TRAP #08 exception
-0000A4 00000488         	dc.l   Exception       ; TRAP #09 exception
-0000A8 00000488         	dc.l   Exception       ; TRAP #10 exception
-0000AC 00000488         	dc.l   Exception       ; TRAP #11 exception
-0000B0 00000488         	dc.l   Exception       ; TRAP #12 exception
-0000B4 00000488         	dc.l   Exception       ; TRAP #13 exception
-0000B8 00000488         	dc.l   Exception       ; TRAP #14 exception
-0000BC 00000488         	dc.l   Exception       ; TRAP #15 exception
-0000C0 00000488         	dc.l   Exception       ; Unused (reserved)
-0000C4 00000488         	dc.l   Exception       ; Unused (reserved)
-0000C8 00000488         	dc.l   Exception       ; Unused (reserved)
-0000CC 00000488         	dc.l   Exception       ; Unused (reserved)
-0000D0 00000488         	dc.l   Exception       ; Unused (reserved)
-0000D4 00000488         	dc.l   Exception       ; Unused (reserved)
-0000D8 00000488         	dc.l   Exception       ; Unused (reserved)
-0000DC 00000488         	dc.l   Exception       ; Unused (reserved)
-0000E0 00000488         	dc.l   Exception       ; Unused (reserved)
-0000E4 00000488         	dc.l   Exception       ; Unused (reserved)
-0000E8 00000488         	dc.l   Exception       ; Unused (reserved)
-0000EC 00000488         	dc.l   Exception       ; Unused (reserved)
-0000F0 00000488         	dc.l   Exception       ; Unused (reserved)
-0000F4 00000488         	dc.l   Exception       ; Unused (reserved)
-0000F8 00000488         	dc.l   Exception       ; Unused (reserved)
-0000FC 00000488         	dc.l   Exception       ; Unused (reserved)
+000008 00000492         	dc.l   Exception       ; Bus error
+00000C 00000492         	dc.l   Exception       ; Address error
+000010 00000492         	dc.l   Exception       ; Illegal instruction
+000014 00000492         	dc.l   Exception       ; Division by zero
+000018 00000492         	dc.l   Exception       ; CHK exception
+00001C 00000492         	dc.l   Exception       ; TRAPV exception
+000020 00000492         	dc.l   Exception       ; Privilege violation
+000024 00000492         	dc.l   Exception       ; TRACE exception
+000028 00000492         	dc.l   Exception       ; Line-A emulator
+00002C 00000492         	dc.l   Exception       ; Line-F emulator
+000030 00000492         	dc.l   Exception       ; Unused (reserved)
+000034 00000492         	dc.l   Exception       ; Unused (reserved)
+000038 00000492         	dc.l   Exception       ; Unused (reserved)
+00003C 00000492         	dc.l   Exception       ; Unused (reserved)
+000040 00000492         	dc.l   Exception       ; Unused (reserved)
+000044 00000492         	dc.l   Exception       ; Unused (reserved)
+000048 00000492         	dc.l   Exception       ; Unused (reserved)
+00004C 00000492         	dc.l   Exception       ; Unused (reserved)
+000050 00000492         	dc.l   Exception       ; Unused (reserved)
+000054 00000492         	dc.l   Exception       ; Unused (reserved)
+000058 00000492         	dc.l   Exception       ; Unused (reserved)
+00005C 00000492         	dc.l   Exception       ; Unused (reserved)
+000060 00000492         	dc.l   Exception       ; Spurious exception
+000064 00000492         	dc.l   Exception       ; IRQ level 1
+000068 00000492         	dc.l   Exception       ; IRQ level 2
+00006C 00000416         	dc.l   DMAdone		   ; IRQ level 3 (DMA)
+000070 00000492         	dc.l   Exception       ; IRQ level 4
+000074 00000492         	dc.l   Exception       ; IRQ level 5
+000078 00000492         	dc.l   Exception       ; IRQ level 6
+00007C 00000492         	dc.l   Exception       ; IRQ level 7
+000080 00000492         	dc.l   Exception       ; TRAP #00 exception
+000084 00000492         	dc.l   Exception       ; TRAP #01 exception
+000088 00000492         	dc.l   Exception       ; TRAP #02 exception
+00008C 00000492         	dc.l   Exception       ; TRAP #03 exception
+000090 00000492         	dc.l   Exception       ; TRAP #04 exception
+000094 00000492         	dc.l   Exception       ; TRAP #05 exception
+000098 00000492         	dc.l   Exception       ; TRAP #06 exception
+00009C 00000492         	dc.l   Exception       ; TRAP #07 exception
+0000A0 00000492         	dc.l   Exception       ; TRAP #08 exception
+0000A4 00000492         	dc.l   Exception       ; TRAP #09 exception
+0000A8 00000492         	dc.l   Exception       ; TRAP #10 exception
+0000AC 00000492         	dc.l   Exception       ; TRAP #11 exception
+0000B0 00000492         	dc.l   Exception       ; TRAP #12 exception
+0000B4 00000492         	dc.l   Exception       ; TRAP #13 exception
+0000B8 00000492         	dc.l   Exception       ; TRAP #14 exception
+0000BC 00000492         	dc.l   Exception       ; TRAP #15 exception
+0000C0 00000492         	dc.l   Exception       ; Unused (reserved)
+0000C4 00000492         	dc.l   Exception       ; Unused (reserved)
+0000C8 00000492         	dc.l   Exception       ; Unused (reserved)
+0000CC 00000492         	dc.l   Exception       ; Unused (reserved)
+0000D0 00000492         	dc.l   Exception       ; Unused (reserved)
+0000D4 00000492         	dc.l   Exception       ; Unused (reserved)
+0000D8 00000492         	dc.l   Exception       ; Unused (reserved)
+0000DC 00000492         	dc.l   Exception       ; Unused (reserved)
+0000E0 00000492         	dc.l   Exception       ; Unused (reserved)
+0000E4 00000492         	dc.l   Exception       ; Unused (reserved)
+0000E8 00000492         	dc.l   Exception       ; Unused (reserved)
+0000EC 00000492         	dc.l   Exception       ; Unused (reserved)
+0000F0 00000492         	dc.l   Exception       ; Unused (reserved)
+0000F4 00000492         	dc.l   Exception       ; Unused (reserved)
+0000F8 00000492         	dc.l   Exception       ; Unused (reserved)
+0000FC 00000492         	dc.l   Exception       ; Unused (reserved)
 
 
 000100                  EntryPoint:           ; Entry point address set in ROM header
@@ -77,384 +77,414 @@
                         ; Main
                         ; ************************************
 000106                  Main:
-000106 43F9 0000048A    	lea.l ver,a1
+000106 43F9 00000539    	lea.l ver,a1
 src/rom.asm:81: *** Warning:  Short branch could be used here ***
-00010C 6100 003E        	bsr Printstring
-000110 143C 0000        	move.b #0,d2
-000114 6100 00E0        	bsr Selectdisk
-000118 227C 00080001    	move.l #$80001,a1
-00011E 123C 0000        	move.b #0,d1
-000122 343C 0EFF        	move.w #$0eff,d2
-000126 6100 0266        	bsr ReadDMA
-00012A 7200             	moveq.l #0,d1
-00012C 7400             	moveq.l #0,d2
-00012E 7601             	moveq #1,d3
-000130 227C 00080001    	move.l #$80001,a1
-000136 2411             	move.l (a1),d2
-000138 45F9 000004AF    	lea.l pcdesc,a2
-00013E 4ED1             	jmp (a1)
-000140 4E72 0000        	stop #$00
+00010C 6100 0046        	bsr Printstring
+000110 7C00             	moveq.l #0,d6
+000112 223C 00000096    	move.l #150,d1
+000118 243C 00000069    	move.l #105,d2
+00011E 49F9 00000494    	lea.l tux,a4
+000124                  loop:
+000124 1614             	move.b (a4),d3
+src/rom.asm:88: *** Warning:  Short branch could be used here ***
+000126 6100 003C        	bsr Drawscreen
+00012A 528C             	addq.l #1,a4
+00012C 5281             	addq.l #1,d1
+00012E 0C41 00A5        	cmpi.w #165,d1
+src/rom.asm:92: *** Warning:  Short branch could be used here ***
+000132 6700 000C        	beq loop2
+000136 0C42 0073        	cmpi.w #115,d2
+00013A 6FE8             	ble loop
+00013C 4E72 0000        	stop #$00
+000140                  loop2:
+000140 5282             	addq.l #1,d2
+000142 223C 00000096    	move.l #150,d1
+000148 4EF8 0124        	jmp loop
 
-000144                  Printchar: ; d1 character
-000144 307C 5000        	move.w #$5000,a0
-000148 1081             	move.b d1,(a0)
-00014A 4E75             	rts
+00014C                  Printchar: ; d1 character
+00014C 307C 5000        	move.w #$5000,a0
+000150 1081             	move.b d1,(a0)
+000152 4E75             	rts
 
-00014C                  Printstring: ; a1 string address
-00014C 1211             	move.b (a1),d1
-00014E 61F4             	bsr Printchar
-000150 2409             	move.l a1,d2
-000152 5202             	addq.b #1,d2
-000154 2242             	move.l d2,a1
-000156 4A11             	tst.b (a1)
-000158 66F2             	bne Printstring
-00015A 4E75             	rts
+000154                  Printstring: ; a1 string address
+000154 1211             	move.b (a1),d1
+000156 61F4             	bsr Printchar
+000158 2409             	move.l a1,d2
+00015A 5202             	addq.b #1,d2
+00015C 2242             	move.l d2,a1
+00015E 4A11             	tst.b (a1)
+000160 66F2             	bne Printstring
+000162 4E75             	rts
 
-00015C                  Drawscreen: ; d1 x d2 y d3 color
-00015C 207C 00F00000    	move.l #$f00000,a0
-000162 227C 000FFFFF    	move.l #$0fffff,a1
-000168 7E00             	moveq.l #0,d7
-00016A 1287             	move.b d7,(a1)
-00016C 383C 0140        	move.w #320,d4
-000170 C8C2             	mulu.w d2,d4
-000172 D841             	add.w d1,d4
-000174 2A08             	move.l a0,d5
-000176 D885             	add.l d5,d4
-000178 2444             	move.l d4,a2
-00017A 1483             	move.b d3,(a2)
-00017C 4E75             	rts
+000164                  Drawscreen: ; d1 x d2 y d3 color
+000164 207C 00F00000    	move.l #$f00000,a0
+00016A 227C 000FFFFF    	move.l #$0fffff,a1
+000170 7E00             	moveq.l #0,d7
+000172 1287             	move.b d7,(a1)
+000174 283C 00000140    	move.l #320,d4
+00017A C8C2             	mulu.w d2,d4
+00017C D881             	add.l d1,d4
+00017E 2A08             	move.l a0,d5
+000180 D885             	add.l d5,d4
+000182 2444             	move.l d4,a2
+000184 1483             	move.b d3,(a2)
+000186 4E75             	rts
 
-00017E                  Readtimer: ; d1 ret value
-00017E 207C 00F00000    	move.l #$f00000,a0
-000184 227C 000FFFFF    	move.l #$0fffff,a1
-00018A 7E01             	moveq.l #1,d7
-00018C 1287             	move.b d7,(a1)
-00018E 1210             	move.b (a0),d1
+000188                  Readtimer: ; d1 ret value
+000188 207C 00F00000    	move.l #$f00000,a0
+00018E 227C 000FFFFF    	move.l #$0fffff,a1
+000194 7E01             	moveq.l #1,d7
+000196 1287             	move.b d7,(a1)
+000198 1210             	move.b (a0),d1
 
-000190                  Writetimer: ; d1 input value
-000190 207C 00F00000    	move.l #$f00000,a0
-000196 227C 000FFFFF    	move.l #$0fffff,a1
-00019C 7E01             	moveq.l #1,d7
-00019E 1287             	move.b d7,(a1)
-0001A0 1081             	move.b d1,(a0)
+00019A                  Writetimer: ; d1 input value
+00019A 207C 00F00000    	move.l #$f00000,a0
+0001A0 227C 000FFFFF    	move.l #$0fffff,a1
+0001A6 7E01             	moveq.l #1,d7
+0001A8 1287             	move.b d7,(a1)
+0001AA 1081             	move.b d1,(a0)
 
-0001A2                  itoa: ; d1 input value a1 string address d2 base
-0001A2 0C41 0000        	cmpi #0,d1
-src/rom.asm:142: *** Warning:  Short branch could be used here ***
-0001A6 6600 0010        	bne itoamain
-0001AA 2609             	move.l a1,d3
-0001AC 163C 0030        	move.b #'0',d3
-0001B0 5283             	addq.l #1,d3
-0001B2 163C 0000        	move.b #0,d3
-0001B6 4E75             	rts
-0001B8                  itoamain:
-0001B8 2F03             	move.l d3,-(sp)
-0001BA 86C1             	divu d1,d3
-0001BC 2803             	move.l d3,d4
-0001BE E04B             	lsr #8,d3
-0001C0 E04B             	lsr #8,d3
-0001C2 0284 0000FFFF    	andi.l #$ffff,d4
-0001C8 3204             	move.w d4,d1
-0001CA 0C43 0009        	cmpi.w #9,d3
-src/rom.asm:157: *** Warning:  Short branch could be used here ***
-0001CE 6E00 000C        	bgt itoaadd
-0001D2 D67C 0030        	add.w #'0',d3
-0001D6 4EF9 000001E4    	jmp itoacon
-0001DC                  itoaadd:
-0001DC 967C 000A        	sub.w #10,d3
-0001E0 D67C 0061        	add.w #'a',d3
-0001E4                  itoacon:
-0001E4 2803             	move.l d3,d4
-0001E6 225F             	move.l (sp)+,a1
-0001E8 1284             	move.b d4,(a1)
-0001EA 2609             	move.l a1,d3
-0001EC 5283             	addq.l #1,d3
-0001EE 0C41 0000        	cmpi #0,d1
-0001F2 66C4             	bne itoamain
-0001F4 4E75             	rts
+0001AC                  itoa: ; d1 input value a1 string address d2 base
+0001AC 0C41 0000        	cmpi #0,d1
+src/rom.asm:146: *** Warning:  Short branch could be used here ***
+0001B0 6600 0010        	bne itoamain
+0001B4 2609             	move.l a1,d3
+0001B6 163C 0030        	move.b #'0',d3
+0001BA 5283             	addq.l #1,d3
+0001BC 163C 0000        	move.b #0,d3
+0001C0 4E75             	rts
+0001C2                  itoamain:
+0001C2 2F03             	move.l d3,-(sp)
+0001C4 86C1             	divu d1,d3
+0001C6 2803             	move.l d3,d4
+0001C8 E04B             	lsr #8,d3
+0001CA E04B             	lsr #8,d3
+0001CC 0284 0000FFFF    	andi.l #$ffff,d4
+0001D2 3204             	move.w d4,d1
+0001D4 0C43 0009        	cmpi.w #9,d3
+src/rom.asm:161: *** Warning:  Short branch could be used here ***
+0001D8 6E00 000C        	bgt itoaadd
+0001DC D67C 0030        	add.w #'0',d3
+0001E0 4EF9 000001EE    	jmp itoacon
+0001E6                  itoaadd:
+0001E6 967C 000A        	sub.w #10,d3
+0001EA D67C 0061        	add.w #'a',d3
+0001EE                  itoacon:
+0001EE 2803             	move.l d3,d4
+0001F0 225F             	move.l (sp)+,a1
+0001F2 1284             	move.b d4,(a1)
+0001F4 2609             	move.l a1,d3
+0001F6 5283             	addq.l #1,d3
+0001F8 0C41 0000        	cmpi #0,d1
+0001FC 66C4             	bne itoamain
+0001FE 4E75             	rts
 
-0001F6                  Selectdisk: ; d1 disk selection (master-slave)
-0001F6 207C 00F00005    	move.l #$f00005,a0
-0001FC 247C 000FFFFF    	move.l #$0fffff,a2
-000202 7E02             	moveq.l #2,d7
-000204 1487             	move.b d7,(a2)
-000206 1081             	move.b d1,(a0)
-000208 4E75             	rts
+000200                  Selectdisk: ; d1 disk selection (master-slave)
+000200 207C 00F00005    	move.l #$f00005,a0
+000206 247C 000FFFFF    	move.l #$0fffff,a2
+00020C 7E02             	moveq.l #2,d7
+00020E 1487             	move.b d7,(a2)
+000210 1081             	move.b d1,(a0)
+000212 4E75             	rts
 
-00020A                  Setaddressdisk: ; a1 disk address
-00020A 207C 00F00000    	move.l #$f00000,a0
-000210 247C 000FFFFF    	move.l #$0fffff,a2
-000216 7E02             	moveq.l #2,d7
-000218 1487             	move.b d7,(a2)
-00021A 5288             	addq.l #1,a0
-00021C 2C09             	move.l a1,d6
-00021E 0286 000000FF    	andi.l #$ff,d6
-000224 1086             	move.b d6,(a0)
-000226 5288             	addq.l #1,a0
-000228 2C09             	move.l a1,d6
-00022A E08E             	lsr.l #8,d6
-00022C 0286 000000FF    	andi.l #$ff,d6
-000232 1086             	move.b d6,(a0)
-000234 5288             	addq.l #1,a0
-000236 2C09             	move.l a1,d6
-000238 E08E             	lsr.l #8,d6
-00023A E08E             	lsr.l #8,d6
-00023C 0286 000000FF    	andi.l #$ff,d6
-000242 1086             	move.b d6,(a0)
-000244 5288             	addq.l #1,a0
-000246 2C09             	move.l a1,d6
-000248 E08E             	lsr.l #8,d6
-00024A E08E             	lsr.l #8,d6
-00024C E08E             	lsr.l #8,d6
-00024E 0286 000000FF    	andi.l #$ff,d6
-000254 1086             	move.b d6,(a0)
-000256 5988             	subq.l #4,a0
-000258 4E75             	rts
+000214                  Setaddressdisk: ; a1 disk address
+000214 207C 00F00000    	move.l #$f00000,a0
+00021A 247C 000FFFFF    	move.l #$0fffff,a2
+000220 7E02             	moveq.l #2,d7
+000222 1487             	move.b d7,(a2)
+000224 5288             	addq.l #1,a0
+000226 2C09             	move.l a1,d6
+000228 0286 000000FF    	andi.l #$ff,d6
+00022E 1086             	move.b d6,(a0)
+000230 5288             	addq.l #1,a0
+000232 2C09             	move.l a1,d6
+000234 E08E             	lsr.l #8,d6
+000236 0286 000000FF    	andi.l #$ff,d6
+00023C 1086             	move.b d6,(a0)
+00023E 5288             	addq.l #1,a0
+000240 2C09             	move.l a1,d6
+000242 E08E             	lsr.l #8,d6
+000244 E08E             	lsr.l #8,d6
+000246 0286 000000FF    	andi.l #$ff,d6
+00024C 1086             	move.b d6,(a0)
+00024E 5288             	addq.l #1,a0
+000250 2C09             	move.l a1,d6
+000252 E08E             	lsr.l #8,d6
+000254 E08E             	lsr.l #8,d6
+000256 E08E             	lsr.l #8,d6
+000258 0286 000000FF    	andi.l #$ff,d6
+00025E 1086             	move.b d6,(a0)
+000260 5988             	subq.l #4,a0
+000262 4E75             	rts
 
-00025A                  Writedisk: ; d1 data a1 disk address
-00025A 207C 00F00000    	move.l #$f00000,a0
-000260 247C 000FFFFF    	move.l #$0fffff,a2
-000266 7E02             	moveq.l #2,d7
-000268 1487             	move.b d7,(a2)
-00026A 5288             	addq.l #1,a0
-00026C 2C09             	move.l a1,d6
-00026E 0286 000000FF    	andi.l #$ff,d6
-000274 1086             	move.b d6,(a0)
-000276 5288             	addq.l #1,a0
-000278 2C09             	move.l a1,d6
-00027A E08E             	lsr.l #8,d6
-00027C 0286 000000FF    	andi.l #$ff,d6
-000282 1086             	move.b d6,(a0)
-000284 5288             	addq.l #1,a0
-000286 2C09             	move.l a1,d6
-000288 E08E             	lsr.l #8,d6
-00028A E08E             	lsr.l #8,d6
-00028C 0286 000000FF    	andi.l #$ff,d6
-000292 1086             	move.b d6,(a0)
-000294 5288             	addq.l #1,a0
-000296 2C09             	move.l a1,d6
-000298 E08E             	lsr.l #8,d6
-00029A E08E             	lsr.l #8,d6
-00029C E08E             	lsr.l #8,d6
-00029E 0286 000000FF    	andi.l #$ff,d6
-0002A4 1086             	move.b d6,(a0)
-0002A6 5988             	subq.l #4,a0
-0002A8 1081             	move.b d1,(a0)
-0002AA 4E75             	rts
+000264                  Writedisk: ; d1 data a1 disk address
+000264 207C 00F00000    	move.l #$f00000,a0
+00026A 247C 000FFFFF    	move.l #$0fffff,a2
+000270 7E02             	moveq.l #2,d7
+000272 1487             	move.b d7,(a2)
+000274 5288             	addq.l #1,a0
+000276 2C09             	move.l a1,d6
+000278 0286 000000FF    	andi.l #$ff,d6
+00027E 1086             	move.b d6,(a0)
+000280 5288             	addq.l #1,a0
+000282 2C09             	move.l a1,d6
+000284 E08E             	lsr.l #8,d6
+000286 0286 000000FF    	andi.l #$ff,d6
+00028C 1086             	move.b d6,(a0)
+00028E 5288             	addq.l #1,a0
+000290 2C09             	move.l a1,d6
+000292 E08E             	lsr.l #8,d6
+000294 E08E             	lsr.l #8,d6
+000296 0286 000000FF    	andi.l #$ff,d6
+00029C 1086             	move.b d6,(a0)
+00029E 5288             	addq.l #1,a0
+0002A0 2C09             	move.l a1,d6
+0002A2 E08E             	lsr.l #8,d6
+0002A4 E08E             	lsr.l #8,d6
+0002A6 E08E             	lsr.l #8,d6
+0002A8 0286 000000FF    	andi.l #$ff,d6
+0002AE 1086             	move.b d6,(a0)
+0002B0 5988             	subq.l #4,a0
+0002B2 1081             	move.b d1,(a0)
+0002B4 4E75             	rts
 
-0002AC                  Readdisk: ; d1 data a1 disk address
-0002AC 207C 00F00000    	move.l #$f00000,a0
-0002B2 247C 000FFFFF    	move.l #$0fffff,a2
-0002B8 7E02             	moveq.l #2,d7
-0002BA 1487             	move.b d7,(a2)
-0002BC 5288             	addq.l #1,a0
-0002BE 2C09             	move.l a1,d6
-0002C0 0286 000000FF    	andi.l #$ff,d6
-0002C6 1086             	move.b d6,(a0)
-0002C8 5288             	addq.l #1,a0
-0002CA 2C09             	move.l a1,d6
-0002CC E08E             	lsr.l #8,d6
-0002CE 0286 000000FF    	andi.l #$ff,d6
-0002D4 1086             	move.b d6,(a0)
-0002D6 5288             	addq.l #1,a0
-0002D8 2C09             	move.l a1,d6
-0002DA E08E             	lsr.l #8,d6
-0002DC E08E             	lsr.l #8,d6
-0002DE 0286 000000FF    	andi.l #$ff,d6
-0002E4 1086             	move.b d6,(a0)
-0002E6 5288             	addq.l #1,a0
-0002E8 2C09             	move.l a1,d6
-0002EA E08E             	lsr.l #8,d6
-0002EC E08E             	lsr.l #8,d6
-0002EE E08E             	lsr.l #8,d6
-0002F0 0286 000000FF    	andi.l #$ff,d6
-0002F6 1086             	move.b d6,(a0)
-0002F8 5988             	subq.l #4,a0
-0002FA 1210             	move.b (a0),d1
-0002FC 4E75             	rts
+0002B6                  Readdisk: ; d1 data a1 disk address
+0002B6 207C 00F00000    	move.l #$f00000,a0
+0002BC 247C 000FFFFF    	move.l #$0fffff,a2
+0002C2 7E02             	moveq.l #2,d7
+0002C4 1487             	move.b d7,(a2)
+0002C6 5288             	addq.l #1,a0
+0002C8 2C09             	move.l a1,d6
+0002CA 0286 000000FF    	andi.l #$ff,d6
+0002D0 1086             	move.b d6,(a0)
+0002D2 5288             	addq.l #1,a0
+0002D4 2C09             	move.l a1,d6
+0002D6 E08E             	lsr.l #8,d6
+0002D8 0286 000000FF    	andi.l #$ff,d6
+0002DE 1086             	move.b d6,(a0)
+0002E0 5288             	addq.l #1,a0
+0002E2 2C09             	move.l a1,d6
+0002E4 E08E             	lsr.l #8,d6
+0002E6 E08E             	lsr.l #8,d6
+0002E8 0286 000000FF    	andi.l #$ff,d6
+0002EE 1086             	move.b d6,(a0)
+0002F0 5288             	addq.l #1,a0
+0002F2 2C09             	move.l a1,d6
+0002F4 E08E             	lsr.l #8,d6
+0002F6 E08E             	lsr.l #8,d6
+0002F8 E08E             	lsr.l #8,d6
+0002FA 0286 000000FF    	andi.l #$ff,d6
+000300 1086             	move.b d6,(a0)
+000302 5988             	subq.l #4,a0
+000304 1210             	move.b (a0),d1
+000306 4E75             	rts
 
-0002FE                  IsreadyDMA: ; d0 return value
-0002FE 207C 00F00008    	move.l #$f00008,a0
-000304 247C 000FFFFF    	move.l #$0fffff,a2
-00030A 7E03             	moveq.l #3,d7
-00030C 1487             	move.b d7,(a2)
-00030E 1010             	move.b (a0),d0
-000310 EE48             	lsr #7,d0
-000312 4E75             	rts
+000308                  IsreadyDMA: ; d0 return value
+000308 207C 00F00008    	move.l #$f00008,a0
+00030E 247C 000FFFFF    	move.l #$0fffff,a2
+000314 7E03             	moveq.l #3,d7
+000316 1487             	move.b d7,(a2)
+000318 1010             	move.b (a0),d0
+00031A EE48             	lsr #7,d0
+00031C 4E75             	rts
 
-000314                  WriteDMA: ; d1 DMA channel (0-4) a1 address from write d2 size
-000314 61E8             	bsr IsreadyDMA
-000316 4A40             	tst d0
-000318 6700 00F0        	beq DMAret
-00031C 207C 00F00000    	move.l #$f00000,a0
-000322 247C 000FFFFF    	move.l #$0fffff,a2
-000328 7E03             	moveq.l #3,d7
-00032A 1487             	move.b d7,(a2)
-00032C 5288             	addq.l #1,a0
-00032E 2C09             	move.l a1,d6
-000330 0286 000000FF    	andi.l #$ff,d6
-000336 1086             	move.b d6,(a0)
-000338 5288             	addq.l #1,a0
-00033A 2C09             	move.l a1,d6
-00033C E08E             	lsr.l #8,d6
-00033E 0286 000000FF    	andi.l #$ff,d6
-000344 1086             	move.b d6,(a0)
-000346 5288             	addq.l #1,a0
-000348 2C09             	move.l a1,d6
-00034A E08E             	lsr.l #8,d6
-00034C E08E             	lsr.l #8,d6
-00034E 0286 000000FF    	andi.l #$ff,d6
-000354 1086             	move.b d6,(a0)
-000356 5288             	addq.l #1,a0
-000358 2C02             	move.l d2,d6
-00035A E08E             	lsr.l #8,d6
-00035C E08E             	lsr.l #8,d6
-00035E E08E             	lsr.l #8,d6
-000360 0286 000000FF    	andi.l #$ff,d6
-000366 1086             	move.b d6,(a0)
-000368 5288             	addq.l #1,a0
-00036A 2C02             	move.l d2,d6
-00036C 0286 000000FF    	andi.l #$ff,d6
-000372 1086             	move.b d6,(a0)
-000374 5288             	addq.l #1,a0
-000376 2C02             	move.l d2,d6
-000378 E08E             	lsr.l #8,d6
-00037A 0286 000000FF    	andi.l #$ff,d6
-000380 1086             	move.b d6,(a0)
-000382 5288             	addq.l #1,a0
-000384 1081             	move.b d1,(a0)
-000386 5F88             	subq.l #7,a0
-000388 10BC 0001        	move.b #1,(a0)
-00038C 4E75             	rts
+00031E                  WriteDMA: ; d1 DMA channel (0-4) a1 address from write d2 size
+00031E 61E8             	bsr IsreadyDMA
+000320 4A40             	tst d0
+000322 6700 00F0        	beq DMAret
+000326 207C 00F00000    	move.l #$f00000,a0
+00032C 247C 000FFFFF    	move.l #$0fffff,a2
+000332 7E03             	moveq.l #3,d7
+000334 1487             	move.b d7,(a2)
+000336 5288             	addq.l #1,a0
+000338 2C09             	move.l a1,d6
+00033A 0286 000000FF    	andi.l #$ff,d6
+000340 1086             	move.b d6,(a0)
+000342 5288             	addq.l #1,a0
+000344 2C09             	move.l a1,d6
+000346 E08E             	lsr.l #8,d6
+000348 0286 000000FF    	andi.l #$ff,d6
+00034E 1086             	move.b d6,(a0)
+000350 5288             	addq.l #1,a0
+000352 2C09             	move.l a1,d6
+000354 E08E             	lsr.l #8,d6
+000356 E08E             	lsr.l #8,d6
+000358 0286 000000FF    	andi.l #$ff,d6
+00035E 1086             	move.b d6,(a0)
+000360 5288             	addq.l #1,a0
+000362 2C02             	move.l d2,d6
+000364 E08E             	lsr.l #8,d6
+000366 E08E             	lsr.l #8,d6
+000368 E08E             	lsr.l #8,d6
+00036A 0286 000000FF    	andi.l #$ff,d6
+000370 1086             	move.b d6,(a0)
+000372 5288             	addq.l #1,a0
+000374 2C02             	move.l d2,d6
+000376 0286 000000FF    	andi.l #$ff,d6
+00037C 1086             	move.b d6,(a0)
+00037E 5288             	addq.l #1,a0
+000380 2C02             	move.l d2,d6
+000382 E08E             	lsr.l #8,d6
+000384 0286 000000FF    	andi.l #$ff,d6
+00038A 1086             	move.b d6,(a0)
+00038C 5288             	addq.l #1,a0
+00038E 1081             	move.b d1,(a0)
+000390 5F88             	subq.l #7,a0
+000392 10BC 0001        	move.b #1,(a0)
+000396 4E75             	rts
 
-00038E                  ReadDMA: ; d1 DMA channel (0-4) a1 address from read d2 size
-00038E 6100 FF6E        	bsr IsreadyDMA
-000392 4A40             	tst d0
-src/rom.asm:330: *** Warning:  Short branch could be used here ***
-000394 6700 0074        	beq DMAret
-000398 207C 00F00000    	move.l #$f00000,a0
-00039E 247C 000FFFFF    	move.l #$0fffff,a2
-0003A4 7E03             	moveq.l #3,d7
-0003A6 1487             	move.b d7,(a2)
-0003A8 5288             	addq.l #1,a0
-0003AA 2C09             	move.l a1,d6
-0003AC 0286 000000FF    	andi.l #$ff,d6
-0003B2 1086             	move.b d6,(a0)
-0003B4 5288             	addq.l #1,a0
-0003B6 2C09             	move.l a1,d6
-0003B8 E08E             	lsr.l #8,d6
-0003BA 0286 000000FF    	andi.l #$ff,d6
-0003C0 1086             	move.b d6,(a0)
-0003C2 5288             	addq.l #1,a0
-0003C4 2C09             	move.l a1,d6
-0003C6 E08E             	lsr.l #8,d6
-0003C8 E08E             	lsr.l #8,d6
-0003CA 0286 000000FF    	andi.l #$ff,d6
-0003D0 1086             	move.b d6,(a0)
-0003D2 5288             	addq.l #1,a0
-0003D4 2C02             	move.l d2,d6
-0003D6 E08E             	lsr.l #8,d6
-0003D8 E08E             	lsr.l #8,d6
-0003DA E08E             	lsr.l #8,d6
-0003DC 0286 000000FF    	andi.l #$ff,d6
-0003E2 1086             	move.b d6,(a0)
-0003E4 5288             	addq.l #1,a0
-0003E6 2C02             	move.l d2,d6
-0003E8 0286 000000FF    	andi.l #$ff,d6
-0003EE 1086             	move.b d6,(a0)
-0003F0 5288             	addq.l #1,a0
-0003F2 2C02             	move.l d2,d6
-0003F4 E08E             	lsr.l #8,d6
-0003F6 0286 000000FF    	andi.l #$ff,d6
-0003FC 1086             	move.b d6,(a0)
-0003FE 5288             	addq.l #1,a0
-000400 1081             	move.b d1,(a0)
-000402 5F88             	subq.l #7,a0
-000404 10BC 0000        	move.b #0,(a0)
-000408 4E75             	rts
+000398                  ReadDMA: ; d1 DMA channel (0-4) a1 address from read d2 size
+000398 6100 FF6E        	bsr IsreadyDMA
+00039C 4A40             	tst d0
+src/rom.asm:334: *** Warning:  Short branch could be used here ***
+00039E 6700 0074        	beq DMAret
+0003A2 207C 00F00000    	move.l #$f00000,a0
+0003A8 247C 000FFFFF    	move.l #$0fffff,a2
+0003AE 7E03             	moveq.l #3,d7
+0003B0 1487             	move.b d7,(a2)
+0003B2 5288             	addq.l #1,a0
+0003B4 2C09             	move.l a1,d6
+0003B6 0286 000000FF    	andi.l #$ff,d6
+0003BC 1086             	move.b d6,(a0)
+0003BE 5288             	addq.l #1,a0
+0003C0 2C09             	move.l a1,d6
+0003C2 E08E             	lsr.l #8,d6
+0003C4 0286 000000FF    	andi.l #$ff,d6
+0003CA 1086             	move.b d6,(a0)
+0003CC 5288             	addq.l #1,a0
+0003CE 2C09             	move.l a1,d6
+0003D0 E08E             	lsr.l #8,d6
+0003D2 E08E             	lsr.l #8,d6
+0003D4 0286 000000FF    	andi.l #$ff,d6
+0003DA 1086             	move.b d6,(a0)
+0003DC 5288             	addq.l #1,a0
+0003DE 2C02             	move.l d2,d6
+0003E0 E08E             	lsr.l #8,d6
+0003E2 E08E             	lsr.l #8,d6
+0003E4 E08E             	lsr.l #8,d6
+0003E6 0286 000000FF    	andi.l #$ff,d6
+0003EC 1086             	move.b d6,(a0)
+0003EE 5288             	addq.l #1,a0
+0003F0 2C02             	move.l d2,d6
+0003F2 0286 000000FF    	andi.l #$ff,d6
+0003F8 1086             	move.b d6,(a0)
+0003FA 5288             	addq.l #1,a0
+0003FC 2C02             	move.l d2,d6
+0003FE E08E             	lsr.l #8,d6
+000400 0286 000000FF    	andi.l #$ff,d6
+000406 1086             	move.b d6,(a0)
+000408 5288             	addq.l #1,a0
+00040A 1081             	move.b d1,(a0)
+00040C 5F88             	subq.l #7,a0
+00040E 10BC 0000        	move.b #0,(a0)
+000412 4E75             	rts
 
-00040A                  DMAret:
-00040A 4E75             	rts
+000414                  DMAret:
+000414 4E75             	rts
 
-00040C                  DMAdone:
-00040C 6100 FEF0        	bsr IsreadyDMA
-000410 0C00 0080        	cmpi.b #$80,d0
-000414 4E73             	rte
+000416                  DMAdone:
+000416 6100 FEF0        	bsr IsreadyDMA
+00041A 0C00 0080        	cmpi.b #$80,d0
+00041E 4E73             	rte
 
-000416                  ClearIRQmask:
-000416 207C 00F00000    	move.l #$f00000,a0
-00041C 247C 000FFFFF    	move.l #$0fffff,a2
-000422 7E04             	moveq.l #4,d7
-000424 1487             	move.b d7,(a2)
-000426 10BC 0000        	move.b #0,(a0)
-00042A 4E75             	rts
+000420                  ClearIRQmask:
+000420 207C 00F00000    	move.l #$f00000,a0
+000426 247C 000FFFFF    	move.l #$0fffff,a2
+00042C 7E04             	moveq.l #4,d7
+00042E 1487             	move.b d7,(a2)
+000430 10BC 0000        	move.b #0,(a0)
+000434 4E75             	rts
 
-00042C                  SetIRQmask:
-00042C 207C 00F00000    	move.l #$f00000,a0
-000432 247C 000FFFFF    	move.l #$0fffff,a2
-000438 7E04             	moveq.l #4,d7
-00043A 1487             	move.b d7,(a2)
-00043C 10BC 00FF        	move.b #$ff,(a0)
-000440 4E75             	rts
+000436                  SetIRQmask:
+000436 207C 00F00000    	move.l #$f00000,a0
+00043C 247C 000FFFFF    	move.l #$0fffff,a2
+000442 7E04             	moveq.l #4,d7
+000444 1487             	move.b d7,(a2)
+000446 10BC 00FF        	move.b #$ff,(a0)
+00044A 4E75             	rts
 
-000442                  SetIRQbit: ; d1 bits number (0 - 7)
-000442 207C 00F00002    	move.l #$f00002,a0
-000448 247C 000FFFFF    	move.l #$0fffff,a2
-00044E 7E04             	moveq.l #4,d7
-000450 1487             	move.b d7,(a2)
-000452 1010             	move.b (a0),d0
-000454 8001             	or.b d1,d0
-000456 1081             	move.b d1,(a0)
-000458 4E75             	rts
-00045A                  ClearIRQbit: ; d1 bits number (0 - 7)
-00045A 207C 00F00002    	move.l #$f00002,a0
-000460 247C 000FFFFF    	move.l #$0fffff,a2
-000466 7E04             	moveq.l #4,d7
-000468 1487             	move.b d7,(a2)
-00046A 1010             	move.b (a0),d0
-00046C B301             	eor.b d1,d1
-00046E C001             	and.b d1,d0
-000470 1081             	move.b d1,(a0)
-000472 4E75             	rts
+00044C                  SetIRQbit: ; d1 bits number (0 - 7)
+00044C 207C 00F00002    	move.l #$f00002,a0
+000452 247C 000FFFFF    	move.l #$0fffff,a2
+000458 7E04             	moveq.l #4,d7
+00045A 1487             	move.b d7,(a2)
+00045C 1010             	move.b (a0),d0
+00045E 8001             	or.b d1,d0
+000460 1081             	move.b d1,(a0)
+000462 4E75             	rts
+000464                  ClearIRQbit: ; d1 bits number (0 - 7)
+000464 207C 00F00002    	move.l #$f00002,a0
+00046A 247C 000FFFFF    	move.l #$0fffff,a2
+000470 7E04             	moveq.l #4,d7
+000472 1487             	move.b d7,(a2)
+000474 1010             	move.b (a0),d0
+000476 B301             	eor.b d1,d1
+000478 C001             	and.b d1,d0
+00047A 1081             	move.b d1,(a0)
+00047C 4E75             	rts
 
-000474                  ReadKBkey: ; d1 return key
-000474 207C 00F00000    	move.l #$f00000,a0
-00047A 247C 000FFFFF    	move.l #$0fffff,a2
-000480 7E05             	moveq.l #5,d7
-000482 1487             	move.b d7,(a2)
-000484 1210             	move.b (a0),d1
-000486 4E75             	rts
+00047E                  ReadKBkey: ; d1 return key
+00047E 207C 00F00000    	move.l #$f00000,a0
+000484 247C 000FFFFF    	move.l #$0fffff,a2
+00048A 7E05             	moveq.l #5,d7
+00048C 1487             	move.b d7,(a2)
+00048E 1210             	move.b (a0),d1
+000490 4E75             	rts
 
-000488                  Exception:
-000488 4E73             	rte
+000492                  Exception:
+000492 4E73             	rte
 
-00048A                  ver:
-00048A 524F4D2076657273 	dc.b "ROM version 0.02\n",0
-000492 696F6E20302E3032
-00049A 0A00
-00049C                  exceptioncaught:
-00049C 457863657074696F 	dc.b "Exception caught!\n",0
-0004A4 6E20636175676874
-0004AC 210A00
-0004AF                  pcdesc:
-0004AF 6D36386B706300   	dc.b "m68kpc",0 ; computer model
-0004B6 363830303000     	dc.b "68000",0 ; processor type
-0004BC 00400000         	dc.l 4194304 ; mem size
-0004C0 00005000         	dc.l $5000 ; debug UART address
-0004C4 01               	dc.b 1 ; dma present
-0004C5 01               	dc.b 1 ; hard disks present
-0004C6 00               	dc.b 0 ; floppy present
-0004C7 01               	dc.b 1 ; keyboard present
-0004C8 01               	dc.b 1 ; screen present
-0004C9 01               	dc.b 1 ; timer present
+000494                  tux:
+000494 0000010100000000 	dc.b 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0
+00049C 00000001010000
+0004A3 0001010101000000 	dc.b 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0
+0004AB 00000101010100
+0004B2 0101010101010000 	dc.b 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1
+0004BA 00010101010101
+0004C1 0101010101010000 	dc.b 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1
+0004C9 00010101010101
+0004D0 0001010101010100 	dc.b 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0
+0004D8 01010101010100
+0004DF 0000010101010101 	dc.b 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0
+0004E7 01010101010000
+0004EE 0000000101010101 	dc.b 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0
+0004F6 01010101000000
+0004FD 0000000001010101 	dc.b 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0
+000505 01010100000000
+00050C 0000000000010101 	dc.b 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0
+000514 01010000000000
+00051B 0000000000000101 	dc.b 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0
+000523 01000000000000
+00052A 0000000000000001 	dc.b 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
+000532 00000000000000
+000539                  ver:
+000539 524F4D2076657273 	dc.b "ROM version 0.02\n",0
+000541 696F6E20302E3032
+000549 0A00
+00054B                  exceptioncaught:
+00054B 457863657074696F 	dc.b "Exception caught!\n",0
+000553 6E20636175676874
+00055B 210A00
+00055E                  pcdesc:
+00055E 6D36386B706300   	dc.b "m68kpc",0 ; computer model
+000565 363830303000     	dc.b "68000",0 ; processor type
+00056B 00400000         	dc.l 4194304 ; mem size
+00056F 00005000         	dc.l $5000 ; debug UART address
+000573 01               	dc.b 1 ; dma present
+000574 01               	dc.b 1 ; hard disks present
+000575 00               	dc.b 0 ; floppy present
+000576 01               	dc.b 1 ; keyboard present
+000577 01               	dc.b 1 ; screen present
+000578 01               	dc.b 1 ; timer present
 
-CLEARIRQBIT        0000045A    CLEARIRQMASK       00000416    DMADONE            0000040C
-DMARET             0000040A    DRAWSCREEN         0000015C    ENTRYPOINT         00000100
-EXCEPTION          00000488    EXCEPTIONCAUGHT    0000049C    ISREADYDMA         000002FE
-ITOA               000001A2    ITOAADD            000001DC    ITOACON            000001E4
-ITOAMAIN           000001B8    MAIN               00000106    PCDESC             000004AF
-PRINTCHAR          00000144    PRINTSTRING        0000014C    READDISK           000002AC
-READDMA            0000038E    READKBKEY          00000474    READTIMER          0000017E
-SELECTDISK         000001F6    SETADDRESSDISK     0000020A    SETIRQBIT          00000442
-SETIRQMASK         0000042C    VER                0000048A    WRITEDISK          0000025A
-WRITEDMA           00000314    WRITETIMER         00000190
+CLEARIRQBIT        00000464    CLEARIRQMASK       00000420    DMADONE            00000416
+DMARET             00000414    DRAWSCREEN         00000164    ENTRYPOINT         00000100
+EXCEPTION          00000492    EXCEPTIONCAUGHT    0000054B    ISREADYDMA         00000308
+ITOA               000001AC    ITOAADD            000001E6    ITOACON            000001EE
+ITOAMAIN           000001C2    LOOP               00000124    LOOP2              00000140
+MAIN               00000106    PCDESC             0000055E    PRINTCHAR          0000014C
+PRINTSTRING        00000154    READDISK           000002B6    READDMA            00000398
+READKBKEY          0000047E    READTIMER          00000188    SELECTDISK         00000200
+SETADDRESSDISK     00000214    SETIRQBIT          0000044C    SETIRQMASK         00000436
+TUX                00000494    VER                00000539    WRITEDISK          00000264
+WRITEDMA           0000031E    WRITETIMER         0000019A
