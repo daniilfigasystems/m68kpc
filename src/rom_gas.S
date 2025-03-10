@@ -436,6 +436,23 @@ move.b %d7,(%a2)
 move.b (%a0),%d1
 rts
 
+ReadKBstatus: | %d1 return status
+move.l #0xf00001,%a0
+move.l #0x0fffff,%a2
+move.l #5,%d7
+move.b %d7,(%a2)
+move.b (%a0),%d1
+rts
+
+IskeypressedKB: | %d1 return value
+move.l #0xf00001,%a0
+move.l #0x0fffff,%a2
+move.l #5,%d7
+move.b %d7,(%a2)
+move.b (%a0),%d1
+lsr.l #7,%d1
+rts
+
 Exception:
 rte
 
