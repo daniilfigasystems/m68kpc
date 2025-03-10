@@ -1,4 +1,4 @@
-.long   0x000F8000      | Initial stack pointer value
+.long   0x00470000      | Initial stack pointer value
 .long   EntryPoint      | Start of program
 .long   Exception       | Bus error
 .long   Exception       | Address error
@@ -25,7 +25,7 @@
 .long   Exception       | Spurious exception
 .long   Exception       | IRQ level 1
 .long   Exception       | IRQ level 2
-.long   DMAdone		   | IRQ level 3 (DMA)
+.long   DMAdone		    | IRQ level 3 (DMA)
 .long   Exception       | IRQ level 4
 .long   Exception       | IRQ level 5
 .long   Exception       | IRQ level 6
@@ -95,11 +95,11 @@ bsr Selectdisk
 move.l #0x000000,%a1
 bsr Setaddressdisk
 move.l #0x0,%d1
-move.l #0x80001,%a1
+move.l #0x80000,%a1
 move.l #0xffff,%d2
 bsr ReadDMA
 lea pcdesc,%a1
-move.l #0x80005,%a0
+move.l #0x80004,%a0
 move.l (%a0),%a2
 move.l %a2,%a0
 jmp (%a0)
@@ -392,7 +392,7 @@ cmpi.b #0x80,%d0
 rte
 
 ClearIRQmask:
-move.l #0xf00000,%a0
+move.l #0xf00002,%a0
 move.l #0x0fffff,%a2
 move.l #4,%d7
 move.b %d7,(%a2)
@@ -400,7 +400,7 @@ move.b #0,(%a0)
 rts
 
 SetIRQmask:
-move.l #0xf00000,%a0
+move.l #0xf00002,%a0
 move.l #0x0fffff,%a2
 move.l #4,%d7
 move.b %d7,(%a2)

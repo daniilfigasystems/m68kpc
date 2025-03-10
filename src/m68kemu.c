@@ -59,9 +59,9 @@ void isa_bus_update();
 #include "m68k.h"
 
 #define ROM_START (0x0000)
-#define ROM_SIZE (1024 * 512)
+#define ROM_SIZE ((1024 * 512) - 1)
 #define ROM_END (ROM_START + ROM_SIZE)
-#define MEM_START (ROM_END + 1)
+#define MEM_START (ROM_END)
 #define MEM_SIZE (1024 * 1024 * 4)
 #define MEM_END (MEM_START + MEM_SIZE)
 #define ISA_BUS_SIZE (1024 * 1024 * 1)
@@ -452,12 +452,12 @@ unsigned int dma_read_8(unsigned int address)
 
 void dma_write_8(unsigned int address, unsigned int value)
 {
-    printf("DMA write! 0x%05x = %x %x\n", address, value, dma_reg.SIZE);
+    // printf("DMA write! 0x%05x = %x %x\n", address, value, dma_reg.SIZE);
 
     switch(address)
     {
         case 0x00:
-            printf("executing addr=0x%08x dmasel=%x size=%x\n", (dma_reg.ADDRH << 16) | (dma_reg.ADDRL), dma_reg.DMASEL, dma_reg.SIZE);
+            // printf("executing addr=0x%08x dmasel=%x size=%x\n", (dma_reg.ADDRH << 16) | (dma_reg.ADDRL), dma_reg.DMASEL, dma_reg.SIZE);
             if (dma_reg.dmafuncs[dma_reg.DMASEL])
             {
                 dma_reg.STATUS &= ~(1 << 7);
@@ -569,7 +569,7 @@ void ide_exit()
 
 void ide_dma_transfer(unsigned int address, unsigned int size, unsigned char rw)
 {
-    printf("dma transfer %x %x\n", rw, size);
+    // printf("dma transfer %x %x\n", rw, size);
 
     unsigned char value;
 
@@ -577,7 +577,7 @@ void ide_dma_transfer(unsigned int address, unsigned int size, unsigned char rw)
     {
         for (unsigned int i = 0; i < size + 1; i++)
         {
-            printf("[IDE] DMA transfer transaction from (0x%08x) to (0x%08x) value=%x rw=%x\n", address + i, (ide_reg.DH << 16) | (ide_reg.DL & 0xffff), mem[address + i], rw);
+            // printf("[IDE] DMA transfer transaction from (0x%08x) to (0x%08x) value=%x rw=%x\n", address + i, (ide_reg.DH << 16) | (ide_reg.DL & 0xffff), mem[address + i], rw);
             value = m68k_read_memory_8(address + i);
             ide_write_8(0, value);
             if (ide_reg.DL >= 65535)
@@ -592,7 +592,7 @@ void ide_dma_transfer(unsigned int address, unsigned int size, unsigned char rw)
     {
         for (unsigned int i = 0; i < size; i++)
         {
-            printf("[IDE] DMA transfer transaction from (0x%08x) to (0x%08x) value=%x rw=%x\n", (ide_reg.DH << 16) | (ide_reg.DL & 0xffff), address + i, mem[address + i], rw);
+            // printf("[IDE] DMA transfer transaction from (0x%08x) to (0x%08x) value=%x rw=%x\n", (ide_reg.DH << 16) | (ide_reg.DL & 0xffff), address + i, mem[address + i], rw);
             value = ide_read_8(0);
             m68k_write_memory_8(address + i, value);
             if (ide_reg.DL >= 65535)
@@ -748,10 +748,10 @@ void m68k_fc_call(unsigned int fc)
 
 void m68k_instr_call(unsigned int pc)
 {
-    char buff[128];
+    // char buff[128];
 
-    m68k_disassemble(buff, pc, M68K_CPU_TYPE_68000);
-    printf("0x%08x: %s\n", pc, buff);
+    // m68k_disassemble(buff, pc, M68K_CPU_TYPE_68000);
+    // printf("0x%08x: %s\n", pc, buff);
 }
 
 void disassemble_program()
@@ -774,7 +774,6 @@ void disassemble_program()
 void abortex(int sig)
 {
     stop = 1;
-    disassemble_program();
     m68k_showregs();
     isa_bus_exit();
     exit(0);

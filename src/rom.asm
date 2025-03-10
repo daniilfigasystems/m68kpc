@@ -1,4 +1,4 @@
-	dc.l   $000F8000      ; Initial stack pointer value
+	dc.l   $00470000      ; Initial stack pointer value
 	dc.l   EntryPoint      ; Start of program
 	dc.l   Exception       ; Bus error
 	dc.l   Exception       ; Address error
