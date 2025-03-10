@@ -63,7 +63,7 @@
 .long   Exception       | Unused (reserved)
 .long   Exception       | Unused (reserved)
 
-
+.section .text
 EntryPoint:           | Entry point address set in ROM header
 
 | ************************************
@@ -74,423 +74,454 @@ jmp Main
 | Main
 | ************************************
 Main:
-lea ver,%a1
-bsr Printstring
-bsr ClearIRQmask
-move.l #0,%d6
-move.l #150,%d1
-move.l #105,%d2
-lea tux,%a4
+    lea ver,%a1
+    bsr Printstring
+    bsr ClearIRQmask
+    move.l #0,%d1
+    move.l #0,%d2
+    move.l #0,%d3
+clsscr:
+    bsr Drawscreen
+    addq.l #1,%d1
+    cmpi.l #320,%d1
+    beq clsscr2
+    cmpi.l #240,%d2
+    bne clsscr
+    move.l #0,%d6
+    move.l #150,%d1
+    move.l #105,%d2
+    lea tux,%a4
 loop:
-move.b (%a4),%d3
-bsr Drawscreen
-addq.l #1,%a4
-addq.l #1,%d1
-cmpi.w #165,%d1
-beq loop2
-cmpi.w #115,%d2
-ble loop
-move.l #0,%d1
-bsr Selectdisk
-move.l #0x000000,%a1
-bsr Setaddressdisk
-move.l #0x0,%d1
-move.l #0x80000,%a1
-move.l #0xffff,%d2
-bsr ReadDMA
-lea pcdesc,%a1
-move.l #0x80004,%a0
-move.l (%a0),%a2
-move.l %a2,%a0
-jmp (%a0)
+    move.l (%a4),%d3
+    bsr Drawscreen
+    addq.l #4,%a4
+    addq.l #1,%d1
+    cmpi.w #165,%d1
+    beq loop2
+    cmpi.w #115,%d2
+    ble loop
+    move.l #0,%d1
+    bsr Selectdisk
+    move.l #0x000000,%a1
+    bsr Setaddressdisk
+    move.l #0x0,%d1
+    move.l #0x80000,%a1
+    move.l #0x200,%d2
+    bsr ReadDMA
+    lea pcdesc,%a1
+    move.l #0x80004,%a0
+    move.l (%a0),%a2
+    move.l %a2,%a0
+    jmp (%a0)
 loop2:
-addq.l #1,%d2
-move.l #150,%d1
-jmp loop
+    addq.l #1,%d2
+    move.l #150,%d1
+    jmp loop
+clsscr2:
+    addq.l #1,%d2
+    move.l #0,%d1
+    jmp clsscr
 
 Printchar: | %d1 character
-move.w #0x5000,%a0
-move.b %d1,(%a0)
-rts
+    move.w #0x5000,%a0
+    move.b %d1,(%a0)
+    rts
 
 Printstring: | %a1 string address
-move.b (%a1),%d1
-bsr Printchar
-move.l %a1,%d2
-addq.b #1,%d2
-move.l %d2,%a1
-tst.b (%a1)
-bne Printstring
-rts
+    move.b (%a1),%d1
+    bsr Printchar
+    move.l %a1,%d2
+    addq.b #1,%d2
+    move.l %d2,%a1
+    tst.b (%a1)
+    bne Printstring
+    rts
 
 Drawscreen: | %d1 x %d2 y %d3 color
-move.l #0xf00000,%a0
-move.l #0x0fffff,%a1
-move.l #0,%d7
-move.b %d7,(%a1)
-move.l #320,%d4
-mulu.w %d2,%d4
-add.l %d1,%d4
-move.l %a0,%d5
-add.l %d5,%d4
-move.l %d4,%a2
-move.b %d3,(%a2)
-rts
+    move.l #0xf00000,%a0
+    move.l #0x0fffff,%a1
+    move.l #0,%d7
+    move.b %d7,(%a1)
+    move.l #960,%d4
+    mulu.w %d2,%d4
+    move.l #3,%d6
+    mulu.w %d1,%d6
+    add.l %d6,%d4
+    move.l %a0,%d5
+    add.l %d5,%d4
+    move.l %d4,%a2
+    move.l %d3,%d6
+    move.b %d6,(%a2)
+    move.l %a2,%d4
+    addq.l #1,%d4
+    move.l %d4,%a2
+    lsr.l #8,%d6
+    move.b %d6,(%a2)
+    move.l %a2,%d4
+    addq.l #1,%d4
+    move.l %d4,%a2
+    move.l %d3,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    move.b %d6,(%a2)
+    rts
 
 Readtimer: | %d1 ret value
-move.l #0xf00000,%a0
-move.l #0x0fffff,%a1
-move.l #1,%d7
-move.b %d7,(%a1)
-move.b (%a0),%d1
+    move.l #0xf00000,%a0
+    move.l #0x0fffff,%a1
+    move.l #1,%d7
+    move.b %d7,(%a1)
+    move.b (%a0),%d1
 
 Writetimer: | %d1 input value
-move.l #0xf00000,%a0
-move.l #0x0fffff,%a1
-move.l #1,%d7
-move.b %d7,(%a1)
-move.b %d1,(%a0)
+    move.l #0xf00000,%a0
+    move.l #0x0fffff,%a1
+    move.l #1,%d7
+    move.b %d7,(%a1)
+    move.b %d1,(%a0)
 
 itoa: | %d1 input value %a1 string address %d2 base
-cmpi #0,%d1
-bne itoamain
-move.l %a1,%d3
-move.b #'0',%d3
-addq.l #1,%d3
-move.b #0,%d3
-rts
+    cmpi.l #0,%d1
+    bne itoamain
+    move.l %a1,%d3
+    move.b #'0',%d3
+    addq.l #1,%d3
+    move.b #0,%d3
+    rts
 itoamain:
-move.l %d3,-(%sp)
-divu.l %d1,%d3
-move.l %d3,%d4
-lsr #8,%d3
-lsr #8,%d3
-andi.l #0xffff,%d4
-move.w %d4,%d1
-cmpi.w #9,%d3
-bgt itoaadd
-add.w #'0',%d3
-jmp itoacon
+    move.l %d3,-(%sp)
+    divu.w %d1,%d3
+    move.l %d3,%d4
+    lsr #8,%d3
+    lsr #8,%d3
+    andi.l #0xffff,%d4
+    move.w %d4,%d1
+    cmpi.w #9,%d3
+    bgt itoaadd
+    add.w #'0',%d3
+    jmp itoacon
 itoaadd:
-sub.w #10,%d3
-add.w #'a',%d3
+    sub.w #10,%d3
+    add.w #'a',%d3
 itoacon:
-move.l %d3,%d4
-move.l (%sp)+,%a1
-move.b %d4,(%a1)
-move.l %a1,%d3
-addq.l #1,%d3
-cmpi #0,%d1
-bne itoamain
-rts
+    move.l %d3,%d4
+    move.l (%sp)+,%a1
+    move.b %d4,(%a1)
+    move.l %a1,%d3
+    addq.l #1,%d3
+    cmpi #0,%d1
+    bne itoamain
+    rts
 
 Selectdisk: | %d1 disk selection (master-slave)
-move.l #0xf00005,%a0
-move.l #0x0fffff,%a2
-move.l #2,%d7
-move.b %d7,(%a2)
-move.b %d1,(%a0)
-rts
+    move.l #0xf00005,%a0
+    move.l #0x0fffff,%a2
+    move.l #2,%d7
+    move.b %d7,(%a2)
+    move.b %d1,(%a0)
+    rts
 
 Setaddressdisk: | %a1 disk address
-move.l #0xf00000,%a0
-move.l #0x0fffff,%a2
-move.l #2,%d7
-move.b %d7,(%a2)
-addq.l #1,%a0
-move.l %a1,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %a1,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %a1,%d6
-lsr.l #8,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %a1,%d6
-lsr.l #8,%d6
-lsr.l #8,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-subq.l #4,%a0
-rts
+    move.l #0xf00000,%a0
+    move.l #0x0fffff,%a2
+    move.l #2,%d7
+    move.b %d7,(%a2)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    subq.l #4,%a0
+    rts
 
 Writedisk: | %d1 data %a1 disk address
-move.l #0xf00000,%a0
-move.l #0x0fffff,%a2
-move.l #2,%d7
-move.b %d7,(%a2)
-addq.l #1,%a0
-move.l %a1,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %a1,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %a1,%d6
-lsr.l #8,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %a1,%d6
-lsr.l #8,%d6
-lsr.l #8,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-subq.l #4,%a0
-move.b %d1,(%a0)
-rts
+    move.l #0xf00000,%a0
+    move.l #0x0fffff,%a2
+    move.l #2,%d7
+    move.b %d7,(%a2)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    subq.l #4,%a0
+    move.b %d1,(%a0)
+    rts
 
 Readdisk: | %d1 data %a1 disk address
-move.l #0xf00000,%a0
-move.l #0x0fffff,%a2
-move.l #2,%d7
-move.b %d7,(%a2)
-addq.l #1,%a0
-move.l %a1,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %a1,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %a1,%d6
-lsr.l #8,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %a1,%d6
-lsr.l #8,%d6
-lsr.l #8,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-subq.l #4,%a0
-move.b (%a0),%d1
-rts
+    move.l #0xf00000,%a0
+    move.l #0x0fffff,%a2
+    move.l #2,%d7
+    move.b %d7,(%a2)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    subq.l #4,%a0
+    move.b (%a0),%d1
+    rts
 
 IsreadyDMA: | %d0 return value
-move.l #0xf00008,%a0
-move.l #0x0fffff,%a2
-move.l #3,%d7
-move.b %d7,(%a2)
-move.b (%a0),%d0
-lsr.l #7,%d0
-rts
+    move.l #0xf00008,%a0
+    move.l #0x0fffff,%a2
+    move.l #3,%d7
+    move.b %d7,(%a2)
+    move.b (%a0),%d0
+    lsr.l #7,%d0
+    rts
 
 WriteDMA: | %d1 DMA channel (0-4) %a1 address from write %d2 size
-bsr IsreadyDMA
-tst %d0
-beq DMAret
-move.l #0xf00000,%a0
-move.l #0x0fffff,%a2
-move.l #3,%d7
-move.b %d7,(%a2)
-addq.l #1,%a0
-move.l %a1,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %a1,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %a1,%d6
-lsr.l #8,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %d2,%d6
-lsr.l #8,%d6
-lsr.l #8,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %d2,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %d2,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.b %d1,(%a0)
-subq.l #7,%a0
-move.b #1,(%a0)
-rts
+    bsr IsreadyDMA
+    tst %d0
+    beq DMAret
+    move.l #0xf00000,%a0
+    move.l #0x0fffff,%a2
+    move.l #3,%d7
+    move.b %d7,(%a2)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %d2,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %d2,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %d2,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.b %d1,(%a0)
+    subq.l #7,%a0
+    move.b #1,(%a0)
+    rts
 
 ReadDMA: | %d1 DMA channel (0-4) %a1 address from read %d2 size
-bsr IsreadyDMA
-tst %d0
-beq DMAret
-move.l #0xf00000,%a0
-move.l #0x0fffff,%a2
-move.l #3,%d7
-move.b %d7,(%a2)
-addq.l #1,%a0
-move.l %a1,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %a1,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %a1,%d6
-lsr.l #8,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %d2,%d6
-lsr.l #8,%d6
-lsr.l #8,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %d2,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.l %d2,%d6
-lsr.l #8,%d6
-andi.l #0xff,%d6
-move.b %d6,(%a0)
-addq.l #1,%a0
-move.b %d1,(%a0)
-subq.l #7,%a0
-move.b #0,(%a0)
-rts
+    bsr IsreadyDMA
+    tst %d0
+    beq DMAret
+    move.l #0xf00000,%a0
+    move.l #0x0fffff,%a2
+    move.l #3,%d7
+    move.b %d7,(%a2)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %a1,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %d2,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %d2,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.l %d2,%d6
+    lsr.l #8,%d6
+    andi.l #0xff,%d6
+    move.b %d6,(%a0)
+    addq.l #1,%a0
+    move.b %d1,(%a0)
+    subq.l #7,%a0
+    move.b #0,(%a0)
+    rts
 
 DMAret:
-rts
+    rts
 
 DMAdone:
-bsr IsreadyDMA
-cmpi.b #0x80,%d0
-rte
+    bsr IsreadyDMA
+    cmpi.b #0x80,%d0
+    rte
 
 ClearIRQmask:
-move.l #0xf00002,%a0
-move.l #0x0fffff,%a2
-move.l #4,%d7
-move.b %d7,(%a2)
-move.b #0,(%a0)
-rts
+    move.l #0xf00002,%a0
+    move.l #0x0fffff,%a2
+    move.l #4,%d7
+    move.b %d7,(%a2)
+    move.b #0,(%a0)
+    rts
 
 SetIRQmask:
-move.l #0xf00002,%a0
-move.l #0x0fffff,%a2
-move.l #4,%d7
-move.b %d7,(%a2)
-move.b #0xff,(%a0)
-rts
+    move.l #0xf00002,%a0
+    move.l #0x0fffff,%a2
+    move.l #4,%d7
+    move.b %d7,(%a2)
+    move.b #0xff,(%a0)
+    rts
 
 SetIRQbit: | %d1 bits number (0 - 7)
-move.l #0xf00002,%a0
-move.l #0x0fffff,%a2
-move.l #4,%d7
-move.b %d7,(%a2)
-move.b (%a0),%d0
-or.b %d1,%d0
-move.b %d1,(%a0)
-rts
+    move.l #0xf00002,%a0
+    move.l #0x0fffff,%a2
+    move.l #4,%d7
+    move.b %d7,(%a2)
+    move.b (%a0),%d0
+    or.b %d1,%d0
+    move.b %d1,(%a0)
+    rts
 
 ClearIRQbit: | %d1 bits number (0 - 7)
-move.l #0xf00002,%a0
-move.l #0x0fffff,%a2
-move.l #4,%d7
-move.b %d7,(%a2)
-move.b (%a0),%d0
-eor.b %d1,%d1
-and.b %d1,%d0
-move.b %d1,(%a0)
-rts
+    move.l #0xf00002,%a0
+    move.l #0x0fffff,%a2
+    move.l #4,%d7
+    move.b %d7,(%a2)
+    move.b (%a0),%d0
+    eor.b %d1,%d1
+    and.b %d1,%d0
+    move.b %d1,(%a0)
+    rts
 
 ReadKBkey: | %d1 return key
-move.l #0xf00000,%a0
-move.l #0x0fffff,%a2
-move.l #5,%d7
-move.b %d7,(%a2)
-move.b (%a0),%d1
-rts
+    move.l #0xf00000,%a0
+    move.l #0x0fffff,%a2
+    move.l #5,%d7
+    move.b %d7,(%a2)
+    move.b (%a0),%d1
+    rts
 
 ReadKBstatus: | %d1 return status
-move.l #0xf00001,%a0
-move.l #0x0fffff,%a2
-move.l #5,%d7
-move.b %d7,(%a2)
-move.b (%a0),%d1
-rts
+    move.l #0xf00001,%a0
+    move.l #0x0fffff,%a2
+    move.l #5,%d7
+    move.b %d7,(%a2)
+    move.b (%a0),%d1
+    rts
 
 IskeypressedKB: | %d1 return value
-move.l #0xf00001,%a0
-move.l #0x0fffff,%a2
-move.l #5,%d7
-move.b %d7,(%a2)
-move.b (%a0),%d1
-lsr.l #7,%d1
-rts
+    move.l #0xf00001,%a0
+    move.l #0x0fffff,%a2
+    move.l #5,%d7
+    move.b %d7,(%a2)
+    move.b (%a0),%d1
+    lsr.l #7,%d1
+    rts
 
 Exception:
-rte
+    rte
 
 ROMcall: | %d7 syscall number
-cmpi.b #0,%d7
-bsr Printchar
-cmpi.b #1,%d7
-bsr Drawscreen
-cmpi.b #2,%d7
-bsr Writedisk
-cmpi.b #3,%d7
-bsr Readdisk
-cmpi.b #4,%d7
-bsr Selectdisk
-cmpi #5,%d7
-bsr Setaddressdisk
-cmpi.b #6,%d7
-bsr WriteDMA
-cmpi.b #7,%d7
-bsr ReadDMA
-cmpi.b #8,%d7
-bsr ReadKBkey
-cmpi.b #9,%d7
-bsr Readtimer
-rte
+    cmpi.b #0,%d7
+    bsr Printchar
+    cmpi.b #1,%d7
+    bsr Drawscreen
+    cmpi.b #2,%d7
+    bsr Writedisk
+    cmpi.b #3,%d7
+    bsr Readdisk
+    cmpi.b #4,%d7
+    bsr Selectdisk
+    cmpi #5,%d7
+    bsr Setaddressdisk
+    cmpi.b #6,%d7
+    bsr WriteDMA
+    cmpi.b #7,%d7
+    bsr ReadDMA
+    cmpi.b #8,%d7
+    bsr ReadKBkey
+    cmpi.b #9,%d7
+    bsr Readtimer
+    rte
 
+.section .rodata
 tux:
-.byte 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0
-.byte 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0
-.byte 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1
-.byte 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1
-.byte 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0
-.byte 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0
-.byte 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0
-.byte 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0
-.byte 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0
-.byte 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0
-.byte 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
+.long 0, 0, 0x0000ff, 0x0000ff, 0, 0, 0, 0, 0, 0, 0, 0x0000ff, 0x0000ff, 0, 0
+.long 0, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0, 0, 0, 0, 0, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0
+.long 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0, 0, 0, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff
+.long 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0, 0, 0, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff
+.long 0, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0
+.long 0, 0, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0, 0
+.long 0, 0, 0, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0, 0, 0
+.long 0, 0, 0, 0, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0, 0, 0, 0
+.long 0, 0, 0, 0, 0, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, 0, 0, 0, 0, 0
+.long 0, 0, 0, 0, 0, 0, 0x0000ff, 0x0000ff, 0x0000ff, 0, 0, 0, 0, 0, 0
+.long 0, 0, 0, 0, 0, 0, 0, 0x0000ff, 0, 0, 0, 0, 0, 0, 0
+.align 8
 ver: 
 .asciz "ROM version 0.02\n"
 exceptioncaught:

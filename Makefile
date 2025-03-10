@@ -17,7 +17,7 @@ all: $(OUTNAME) rom
 $(OUTNAME):
 	$(HOSTCC) -o build/m68kemu src/m68kemu.c musashi/m68kcpu.o musashi/m68kops.o musashi/m68kdasm.o musashi/softfloat/softfloat.o -Imusashi/ -lm -lSDL2main -lSDL2 -lSDL2_ttf -g
 rom:	
-	$(AS) src/rom_gas.S -o build/rom_gas.o
+	$(AS) -mcpu=68000 src/rom_gas.S -o build/rom_gas.o
 	$(LD) build/rom_gas.o -Tsrc/linker.ld -o build/rom.bin
 	$(OBJCOPY) -O binary build/rom.bin build/rom.bin
 clean:

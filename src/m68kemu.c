@@ -140,7 +140,7 @@ struct
     {
         .name = "Video card",
         .address = 0x00000,
-        .size = 0x12c00,
+        .size = 0x38400,
         .id = 0,
         .writefunc = video_write_8,
         .updatefunc = video_update,
@@ -604,7 +604,7 @@ void ide_dma_transfer(unsigned int address, unsigned int size, unsigned char rw)
         }
     }
 
-    printf("[IDE] DMA transfer transaction done. %d bytes transfered\n", size);
+    // printf("[IDE] DMA transfer transaction done. %d bytes transfered\n", size);
 }
 
 unsigned int timer_read_8(unsigned int address)
@@ -648,16 +648,16 @@ void timer_register()
 
 void video_write_8(unsigned int vaddr, unsigned int value)
 {
-    // printf("Write video! 0x%05x color:%d xy:%dx%d\n", vaddr, value & 0x01, vaddr % 320, vaddr / 320);
+    // printf("Write video! 0x%05x color:%x\n", vaddr, value);
     vmem[vaddr] = value & 0xff;
     // SDL_SetRenderDrawColor(renderer, (value & 0x04), ((value >> 2) & 0x08), ((value >> 5) & 0x04), 255);
 }
 
 void video_update()
 {
-    for (unsigned int i = 0; i < isa_desc[0].size; i++)
+    for (unsigned int i = 0; i < (320 * 240); i++)
     {
-        SDL_SetRenderDrawColor(renderer, (vmem[i] & 0x01) ? 255 : 0, (vmem[i] & 0x01) ? 255 : 0, (vmem[i] & 0x01) ? 255 : 0, (vmem[i] & 0x01) ? 255 : 0);
+        SDL_SetRenderDrawColor(renderer, vmem[(i * 3) + 0], vmem[(i * 3) + 1], vmem[(i * 3) + 2], 255);
         SDL_RenderDrawPoint(renderer, i % 320, i / 320);
     }
     SDL_RenderPresent(renderer);
@@ -819,7 +819,7 @@ int main(int argc, char *argv[])
 
     while (!stop)
     {
-        m68k_execute(10000);
+        m68k_execute(250000);
         fflush(stdout);
         while (SDL_PollEvent(&event) == 1) {
             if (event.type == SDL_QUIT) 
