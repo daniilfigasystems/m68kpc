@@ -738,7 +738,7 @@ void m68k_showregs()
 
 void m68k_int_ack(int irq)
 {
-    printf("ack %d\n", irq);
+    // printf("ack %d\n", irq);
 }
 
 void m68k_fc_call(unsigned int fc)
@@ -748,10 +748,10 @@ void m68k_fc_call(unsigned int fc)
 
 void m68k_instr_call(unsigned int pc)
 {
-    // char buff[128];
+    char buff[128];
 
-    // m68k_disassemble(buff, pc, M68K_CPU_TYPE_68000);
-    // printf("0x%08x: %s\n", pc, buff);
+    m68k_disassemble(buff, pc, M68K_CPU_TYPE_68000);
+    printf("0x%08x: %s\n", pc, buff);
 }
 
 void disassemble_program()
@@ -820,8 +820,7 @@ int main(int argc, char *argv[])
 
     while (!stop)
     {
-        usleep(2000);
-        m68k_execute(1);
+        m68k_execute(10000);
         fflush(stdout);
         while (SDL_PollEvent(&event) == 1) {
             if (event.type == SDL_QUIT) 

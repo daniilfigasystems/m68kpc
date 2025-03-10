@@ -1,7 +1,4 @@
-	; ******************************************************************
-	; Sega Megadrive ROM header
-	; ******************************************************************
-	dc.l   $000FF000      ; Initial stack pointer value
+	dc.l   $000F8000      ; Initial stack pointer value
 	dc.l   EntryPoint      ; Start of program
 	dc.l   Exception       ; Bus error
 	dc.l   Exception       ; Address error
@@ -33,7 +30,7 @@
 	dc.l   Exception       ; IRQ level 5
 	dc.l   Exception       ; IRQ level 6
 	dc.l   Exception       ; IRQ level 7
-	dc.l   Exception       ; TRAP #00 exception
+	dc.l   ROMcall         ; TRAP #00 exception (ROM calls)
 	dc.l   Exception       ; TRAP #01 exception
 	dc.l   Exception       ; TRAP #02 exception
 	dc.l   Exception       ; TRAP #03 exception
@@ -79,6 +76,7 @@ EntryPoint:           ; Entry point address set in ROM header
 Main:
 	lea.l ver,a1
 	bsr Printstring
+	bsr ClearIRQmask
 	moveq.l #0,d6
 	move.l #150,d1
 	move.l #105,d2
@@ -92,7 +90,19 @@ loop:
 	beq loop2
 	cmpi.w #115,d2
 	ble loop
-	stop #$00
+	moveq.l #0,d1
+	bsr Selectdisk
+	move.l #$000000,a1
+	bsr Setaddressdisk
+	moveq.l #$0,d1
+	move.l #$80001,a1
+	move.l #$ffff,d2
+	bsr ReadDMA
+	lea.l pcdesc,a1
+	move.l #$80005,a0
+	move.l (a0),a2
+	move.l a2,a0
+	jmp (a0)
 loop2:
 	addq.l #1,d2
 	move.l #150,d1
@@ -406,6 +416,7 @@ SetIRQbit: ; d1 bits number (0 - 7)
 	or.b d1,d0
 	move.b d1,(a0)
 	rts
+	
 ClearIRQbit: ; d1 bits number (0 - 7)
 	move.l #$f00002,a0
 	move.l #$0fffff,a2
@@ -426,6 +437,29 @@ ReadKBkey: ; d1 return key
 	rts
 
 Exception:
+	rte
+
+ROMcall: ; d7 syscall number
+	cmpi.b #0,d7
+	bsr Printchar
+	cmpi.b #1,d7
+	bsr Drawscreen
+	cmpi.b #2,d7
+	bsr Writedisk
+	cmpi.b #3,d7
+	bsr Readdisk
+	cmpi.b #4,d7
+	bsr Selectdisk
+	cmpi #5,d7
+	bsr Setaddressdisk
+	cmpi.b #6,d7
+	bsr WriteDMA
+	cmpi.b #7,d7
+	bsr ReadDMA
+	cmpi.b #8,d7
+	bsr ReadKBkey
+	cmpi.b #9,d7
+	bsr Readtimer
 	rte
 
 tux:
