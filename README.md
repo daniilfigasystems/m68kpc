@@ -12,13 +12,16 @@
   Timer implements 16 bit count register and interrupt support
  ## IRQ controller
   IRQ Controller implements 8 IRQ's
+ ## Keyboard controller
+  Keyboard controller implements read key and status
  ## ISA bus
   ISA bus implements 16 lines addressable up to 1mb
 
 # Memory map
  ## Main Memory map:
  ```
-  0x00000000-0x00400000: RAM
+  0x00000000-0x00080000: ROM
+  0x00080001-0x00480000: RAM
   0x000fffff-0x00f00000: ISA bus
  ```
  ## ISA Memory map:
