@@ -312,7 +312,7 @@ void m68k_write_memory_8(unsigned int address, unsigned int value)
         isa_bus_write_8(address, value, isa_bus.sel & 0xf);
     else if (address == ISA_BUS_SELOFS)
         isa_bus.sel = value & 0xf;
-    else if (address == 0x5000)
+    else if (address == 0x500000)
         printf("%c", value);
     else if (address >= ROM_START && address <= ROM_END)
         printf("[wr8] can't write to rom! (0x%08x)\n", address);

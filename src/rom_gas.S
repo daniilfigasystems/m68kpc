@@ -123,7 +123,7 @@ clsscr2:
     jmp clsscr
 
 Printchar: | %d1 character
-    move.w #0x5000,%a0
+    move.l #0x500000,%a0
     move.b %d1,(%a0)
     rts
 
@@ -530,7 +530,7 @@ pcdesc:
 .asciz "m68kpc" | computer model
 .asciz "68000" | processor type
 .long 4194304 | mem size
-.long 0x5000 | debug UART address
+.long 0x500000 | debug UART address
 .byte 1 | dma present
 .byte 1 | hard disks present
 .byte 0 | floppy present

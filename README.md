@@ -7,7 +7,7 @@
  ## IDE
   IDE Controller implements hdd read and write using direct access to controller or using DMA
  ## Video controller
-  Video controller implements 320x240 1 bit color framebuffer
+  Video controller implements 320x240 24 bit color framebuffer
  ## Timer
   Timer implements 16 bit count register and interrupt support
  ## IRQ controller
